@@ -3,5 +3,42 @@
 {% block content %}
 {% include 'base/status.html' %}
 
-<h1>homepage</h1>
+<section id="dashboard-section">
+    <div class="container my-4">
+        <div class="row">
+            
+
+            <!-- customers section -->
+            <div class="col-lg-5 g-4">
+                <h3 class="fw-semibold pb-2">Customers : </h3>
+                <div class="card card-body">
+                    <table class="table table-sm">
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>...</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- orders section -->
+            <div class="col-lg-7 g-4">
+                <h3 class="fw-semibold pb-2 ">Orders :</h3>
+                <div class="card card-body">
+                    <table class="table table-sm">
+                        <tr>
+                            <th>Product</th>
+                            <th>Date Ordered</th>
+                            <th>Status</th>
+                            <th>Update</th>
+                            <th>Remove</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
 {% endblock %}
