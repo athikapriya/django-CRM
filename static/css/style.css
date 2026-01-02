@@ -23,6 +23,30 @@ html{
     scroll-behavior: smooth;
 }
 
+h1{
+
+}
+
+h2{
+
+}
+
+h3{
+
+}
+
+h4{
+
+}
+
+h5{
+
+}
+
+h6{
+    
+}
+
 /* reset code and common code ends here */
 
 
@@ -68,3 +92,20 @@ nav{
 }
 
 /* navbar ends here */
+
+
+/* status section starts */
+
+#total-orders{
+    background-color: #4cb4c7;
+}
+
+#orders-pending{
+    background-color: #7abecc;
+}
+
+#orders-delivered{
+    background-color: #7cd1c0;
+}
+
+/* status section ends */

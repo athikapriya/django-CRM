@@ -27,15 +27,26 @@
 </head>
 <body>
 
+    <!-- header section starts -->
     <header>
         {% include 'base/navbar.html' %}
     </header>
+    <!-- header section ends -->
     
+    <!-- main section starts -->
+    <main>
+        {% block content %}
 
-    {% block content %}
+        {% endblock %}
+    </main>
+    <!-- main section ends -->
 
-    {% endblock %}
 
+    <!-- footer section starts -->
+    <footer>
+
+    </footer>
+    <!-- footer section ends -->
 
 
 
