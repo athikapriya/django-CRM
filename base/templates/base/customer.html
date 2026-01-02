@@ -1,5 +1,74 @@
 {% extends 'base/main.html' %}
 
 {% block content %}
-<h1>customer</h1>
+
+<section id="customer">
+    <div class="container">
+
+        <!-- first section starts -->
+        <div class="row my-4">
+            
+            <!-- customer updating section -->
+            <div class="col-md-4 g-4">
+                <div class="card card-body">
+                    <h3>Customer : </h3>
+                    <hr>
+                    <a href="" class="btn btn-sm btn-outline-primary mb-2">Update Customer</a>
+                    <a href="" class="btn btn-sm btn-outline-primary">Place Order</a>
+                </div>
+            </div>
+
+            <!-- customer info -->
+            <div class="col-md-4 g-4">
+                <div class="card card-body">
+                    <h3>Customer Info :</h3>
+                    <hr>
+                    <p>Email : </p>
+                    <p class="mb-1">Phone : </p>
+                </div>
+            </div>
+
+            <!-- total orders -->
+            <div class="col-md-4 g-4">
+                <div class="card card-body">
+                    <h3>Total Orders :</h3>
+                    <hr>
+                    <p class="text-center" style="padding: 10px;"></p>
+                </div>
+            </div>
+        </div>
+        <!-- first section ends -->
+
+
+        <!-- second section starts -->
+        <div class="row my-4">
+            <div class="card card-body">
+                <form action="">
+                    <button type="submit" class="btn btn-sm btn-primary">Search</button>
+                </form>
+            </div>
+        </div>
+        <!-- second section ends -->
+
+
+        <!-- third section starts -->
+        <div class="row my-4">
+            <div class="card card-body">
+                <table class="table table-sm">
+                    <tr>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Date Ordered</th>
+                        <th>Status</th>
+                        <th>Update</th>
+                        <th>Remove</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!-- third section ends -->
+
+    </div>
+</section>
+
 {% endblock %}

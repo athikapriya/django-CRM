@@ -45,12 +45,12 @@ nav{
     box-shadow: none;
 }
 
-.btn{
+nav .btn{
     --bs-btn-box-shadow : transparent;
     --bs-btn-border-width: 0px;
 }
 
-.btn-close {
+nav .btn-close {
     --bs-btn-close-focus-shadow: transparent;
 }
 
