@@ -1,0 +1,26 @@
+/* reset code and common code starts here */
+
+*{
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style-type: none;
+}
+
+:root{
+    --primary-color : #4cb4c7;
+    --secondary-color : #7abecc;
+    --tertiary-color : #7cd1c0;
+}
+
+body{
+    background-color: #f5f6f5;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+/* reset code and common code ends here */
