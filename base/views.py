@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import *
+from .forms import OrderForm
 
 
 # homepage view
@@ -41,3 +42,24 @@ def customer(request, pk):
         "total_order" : total_order
     }
     return render(request, 'base/customer.html', context)
+
+
+
+
+# createOrder View
+def CreateOrder(request, pk):
+    customer = Customer.objects.get(id=pk)
+    form = OrderForm(initial={"customer" : customer})
+
+    next_url = request.GET.get("next", "/")
+
+    if request.method == "POST":
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(next_url)
+        
+    context = {
+        "form" : form
+    }
+    return render(request, 'base/order_form.html', context)
