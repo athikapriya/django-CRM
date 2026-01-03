@@ -31,6 +31,7 @@ def products(request):
 
 
 # customer view
-def customer(request):
+def customer(request, pk):
+    customer = Customer.objects.get(id=pk)
     context = {}
     return render(request, 'base/customer.html', context)

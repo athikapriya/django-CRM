@@ -24,7 +24,7 @@
                                 <td>{{ customer.name }}</td>
                                 <td>{{ customer.phone }}</td>
                                 <td>
-                                    <a href="{% url 'customer' %}" class="btn btn-sm btn-info">View</a>
+                                    <a href="{% url 'customer' customer.id %}" class="btn btn-sm btn-info">View</a>
                                 </td>
                             </tr>
                         {% endfor %}
