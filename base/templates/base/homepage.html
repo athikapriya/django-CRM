@@ -52,7 +52,7 @@
                                 <td>{{ order.date_created | date:"M. j, Y" }}</td>
                                 <td>{{ order.status }}</td>
                                 <td>
-                                    <a href="" class="btn btn-sm btn-info">Update</a>
+                                    <a href="{% url 'update_order' order.id %}?next={% url 'homepage' %}" class="btn btn-sm btn-info">Update</a>
                                 </td>
                                 <td>
                                     <a href="" class="btn btn-sm btn-danger">Delete</a>
