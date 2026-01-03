@@ -83,3 +83,19 @@ def UpdateOrder(request, pk):
         "order" : order
     }
     return render(request, "base/order_form.html", context)
+
+
+
+# deleteOrder Views
+def DeleteOrder(request, pk):
+    order = Order.objects.get(id=pk)
+    next_url = request.GET.get("next", "/")
+
+    if request.method == "POST":
+        order.delete()
+        return redirect(next_url)
+    
+    context = {
+        "order" : order
+    }
+    return render(request, 'base/delete.html', context)
