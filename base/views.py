@@ -4,11 +4,14 @@ from .models import *
 
 # homepage view
 def homepage(request):
+    customers = Customer.objects.all()
     orders = Order.objects.all()
     total_orders = orders.count()
     total_pending = orders.filter(status="Pending").count()
     total_delivered = orders.filter(status="Delivered").count()
     context = {
+        "customers" : customers,
+        "orders" : orders,
         "total_orders" : total_orders,
         "total_pending" : total_pending,
         "total_delivered" : total_delivered
