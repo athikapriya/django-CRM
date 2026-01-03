@@ -1,0 +1,36 @@
+/* xxl screen */
+@media screen and (max-width: 1400px) {
+    
+}
+
+
+/* xl screen */
+@media screen and (max-width: 1200px ) {
+    
+}
+
+
+/* large screen */
+@media screen and (max-width: 992px) {
+    
+}
+
+
+/* medium screen */
+@media screen and (max-width: 768px) {
+    .container{
+        padding: 0px 20px;
+    }
+}
+
+
+/* small screen */
+@media screen and (max-width: 576px) {
+    
+}
+
+
+/* smaller screen */
+@media screen and (max-width: 400px) {
+    
+}
