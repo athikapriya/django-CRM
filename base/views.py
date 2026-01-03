@@ -63,3 +63,23 @@ def CreateOrder(request, pk):
         "form" : form
     }
     return render(request, 'base/order_form.html', context)
+
+
+
+# updateOrder Views
+def UpdateOrder(request, pk):
+    order = Order.objects.get(id=pk)
+    form = OrderForm(instance=order)
+    next_url = request.GET.get("next", "/")
+
+    if request.method == "POST":
+        form = OrderForm(request.POST, instance=order)
+        if form.is_valid():
+            form.save()
+            return redirect(next_url)
+        
+    context = {
+        "form" : form,
+        "order" : order
+    }
+    return render(request, "base/order_form.html", context)
