@@ -33,5 +33,11 @@ def products(request):
 # customer view
 def customer(request, pk):
     customer = Customer.objects.get(id=pk)
-    context = {}
+    orders = customer.order_set.all()
+    total_order = orders.count()
+    context = {
+        "customer" : customer,
+        "orders" : orders,
+        "total_order" : total_order
+    }
     return render(request, 'base/customer.html', context)
