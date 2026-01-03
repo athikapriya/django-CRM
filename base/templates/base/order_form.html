@@ -1,0 +1,21 @@
+{% extends 'base/main.html' %}
+{% block content %}
+
+<section id="order_form">
+    <div class="container my-4">
+        <div class="row">
+            <div class="col-6 mx-auto">
+                <div class="card card-body">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+
+                        <button type="submit" class="btn btn-sm btn-primary">Add order</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
