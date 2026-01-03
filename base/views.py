@@ -22,7 +22,10 @@ def homepage(request):
 
 # products view
 def products(request):
-    context = {}
+    products = Product.objects.filter()
+    context = {
+        "products" : products
+    }
     return render(request, 'base/products.html', context)
 
 
