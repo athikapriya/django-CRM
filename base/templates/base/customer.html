@@ -119,7 +119,13 @@
                     {% for order in orders %}
                         <tr>
                             <td>{{ order.product }}</td>
-                            <td>{{ order.note }}</td>
+                            <td>
+                                {% if order.note %}
+                                    {{ order.note }}
+                                {% else %}
+                                    <span class="text-muted">None</span>
+                                {% endif %}
+                            </td>
                             <td>{{ order.product.category }}</td>
                             <td>{{ order.date_created | date:"M. j, Y" }}</td>
                             <td>{{ order.status }}</td>
