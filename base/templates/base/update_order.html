@@ -1,23 +1,66 @@
-{% extends 'base/main.html' %}
-{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <!-- meta tag -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta name="author" content="Athika Priya">
+    <meta name="keywords" content="html, css, bootstrap, js, python, django, dbsqlite3">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<section id="order_form">
-    <div class="container my-4">
-        <div class="row">
-            <div class="col-4 mx-auto">
-                <div class="card card-body">
-                    <form method="POST" class=" py-4">
-                        {% csrf_token %}
-                        {{ form.as_p }}
+    <!-- title -->
+    <title>ClientHub - Order Update</title>
 
-                        <button type="submit" class="btn btn-sm btn-primary mt-3">
-                            Update order
-                        </button>
-                    </form>
+    <!-- font awesome cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+
+    <!-- stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+
+</head>
+<body>
+
+    <main>
+
+        <!-- order update starts -->
+
+        <section id="update-order">
+            <div class="container my-4 ">
+                <div class="row " >
+                    <div class=" col-md-8 col-lg-6 mx-auto ">
+                        <div class="card card-body">
+                            <h3>Update Order :</h3>
+                            <hr>
+                            <form action="" method="POST" class="mx-auto py-3">
+                                {% csrf_token %}
+                                
+                                <div class="input-group">
+                                    <div class="input-group-append">
+                                        {{form.as_p}}
+                                        </div>
+                                </div>
+
+                                <button type="submit" value="Update Order" class="btn btn-sm btn-primary mt-2">Update Order</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
+        </section>
 
-{% endblock %}
+        <!-- order update ends -->
+
+    </main>
+
+
+    <!-- bootstrap js -->
+    <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
