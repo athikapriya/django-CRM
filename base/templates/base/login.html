@@ -1,0 +1,195 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <!-- meta tag -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta name="author" content="Athika Priya">
+    <meta name="keywords" content="html, css, bootstrap, js, python, django, dbsqlite3">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- title -->
+    <title>ClientHub - Login</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="{% static 'images/favicon.webp' %}" type="image/x-icon">
+
+    <!-- font awesome cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+
+    <!-- stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+
+    <!-- internal stylesheet starts -->
+
+    <style>
+
+        body{
+            background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0,0.35)), url("{% static 'images/background_img.webp' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+        }
+
+        .card{
+            background: rgba(255, 255, 255, 0.15); 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+            color: #ffffff;
+        }
+
+        .card h1,
+        .card h2,
+        .card h3,
+        .card h4,
+        .card h5,
+        .card h6,
+        .card p,
+        .card label {
+            color: #ffffff;
+        }
+
+        .form-control {
+            background: rgba(255, 255, 255, 0.85);
+            border: none;
+            border-radius: 6px;
+        }
+
+        .form-control:focus {
+            box-shadow: none;
+            border: 1px solid #4cb4c7; 
+        }
+
+        .form-label {
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            color: #ffffff;
+        }
+
+        .form-control {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 6px;
+            padding: 6px 8px;
+            font-size: 0.9rem;
+        }
+
+        .form-control:focus {
+            border: 1px solid #4cb4c7;
+            box-shadow: none;
+        }
+
+        .toggle-password {
+            position: absolute;
+            top: 31px;
+            right: 12px;
+            cursor: pointer;
+            color: #555;
+            z-index: 10;
+        }
+
+        .toggle-password:hover {
+            color: #000;
+        }
+
+        .fa-eye{
+            font-size: 0.85rem;
+        }
+
+        .field{
+            margin-bottom: 8px;
+        }
+
+        .sign-up-link {
+            font-size: 0.95rem !important;
+        }
+    </style> 
+    <!-- internal stylesheet ends -->
+
+</head>
+<body>
+
+    <main>
+    <!-- registration form starts -->
+        <section id="login-form">
+            <div class="container min-vh-100 d-flex justify-content-center align-items-center">
+                <div class="row">
+                    <div class="col-10 col-sm-8 mx-auto">
+                        <div class="card card-body p-4">
+                            <h1 class="fs-3 mb-3 fw-semibold text-center">Login </h4>
+                            <br>
+
+                            <form action="" method="POST">
+                                {% csrf_token %}
+
+                               <div class="row">
+                               
+                                    <!-- username -->
+                                    <div class="">
+                                        <div class="field">
+                                            <label class="form-label">Username</label>
+                                            <input type="text" name="username" id="username" class="form-control" placeholder="Enter Username...">
+                                        </div>
+                                    </div>
+
+                                    <!-- password -->
+                                    <div class="">
+                                        <div class="field position-relative">
+                                            <label class="form-label">Password</label>
+                                            <input type="text" name="password" id="password" class="form-control" placeholder="Enter your password...">
+                                            <span class="toggle-password">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Login button -->
+                                    <div class="d-flex justify-content-center align-items-center mt-4 mb-3">
+                                        <button type="submit" class="btn btn-light fw-semibold">Login</button>
+                                    </div>
+
+                                </div>
+                               
+                            </form>
+
+                            <!-- messages -->
+                            {% for message in messages %}
+                                <p>{{ message }}</p>
+                            {% endfor %}
+
+                            <div class="">
+                                <div class="d-flex justify-content-center align-items-center text-center">
+                                    <p class="mb-0 ">Don't have an account ?
+                                        <a href="{% url 'register' %}" class="btn text-white text-decoration-underline sign-up-link fw-semibold">Sign Up</a>
+                                    </p>
+                                </div>
+                            </div>
+
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    <!-- registration form starts -->
+    </main>
+
+
+    <!-- bootstrap js -->
+    <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- user registration js -->
+    <script src="{% static 'js/user-registration.js' %}"></script>
+</body>
+</html>
