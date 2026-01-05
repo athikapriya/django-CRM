@@ -1,8 +1,35 @@
 from django.shortcuts import render, redirect
 from .models import *
-from .forms import OrderForm
+from .forms import OrderForm, CreateUserForm
 from django.forms import inlineformset_factory
 from .filters import OrderFilter
+
+
+
+# register page views
+def registerPage(request):
+
+    form = CreateUserForm()
+    if request.method == "POST":
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("login")
+
+    context= {
+        "form" : form
+    }
+    return render(request, 'base/register.html', context)
+
+
+
+# login page views
+def loginPage(request):
+    context = {
+
+    }
+    return render(request, 'base/login.html', context)
+
 
 
 # homepage view
