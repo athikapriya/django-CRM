@@ -150,4 +150,4 @@ def DeleteOrder(request, pk):
     context = {
         "order" : order
     }
-    return render(request, 'base/delete.html', context)
+    return render(request, 'base/delete_order.html', context)
