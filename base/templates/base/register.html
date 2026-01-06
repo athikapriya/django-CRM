@@ -49,6 +49,8 @@
 
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
             color: #ffffff;
+
+            width : 360px;
         }
 
         .card h1,
@@ -115,6 +117,12 @@
         .login-link{
             font-size: 0.95rem !important;
         }
+
+        @media screen and (max-width: 576px) {
+            .card{
+                width: auto;
+            }
+        }
     </style> 
     <!-- internal stylesheet ends -->
 
@@ -126,7 +134,7 @@
         <section id="register-form">
             <div class="container min-vh-100 d-flex justify-content-center align-items-center">
                 <div class="row">
-                    <div class="col-11 col-sm-9 col-md-7 mx-auto">
+                    <div class="mx-auto">
                         <div class="card card-body p-4">
                             <h1 class="fs-3 mb-3 fw-semibold text-center">Register Account </h4>
                             <br>
@@ -134,60 +142,79 @@
                             <form action="" method="POST">
                                 {% csrf_token %}
 
-                               <div class="row">
                                 <!-- username starts -->
-                                <div class="col-lg-6">
-                                    <div class="field">
-                                        <label class="form-label">{{ form.username.label }}</label>
+                                <div class="field ">
+                                    <label class="form-label">{{ form.username.label }}</label>
                                         {{ form.username }}
+                                        <div>
+                                            {% for error in form.username.errors %}
+                                                <small class="">
+                                                    <i class="fa-solid fa-triangle-exclamation"></i>
+                                                    {{ error }}
+                                                </small>
+                                                <br>
+                                        {% endfor %}
                                     </div>
                                 </div>
+                                    
                                 <!-- username ends -->
 
                                 <!-- email starts -->
-                                <div class="col-lg-6">
-                                    <div class="field">
-                                        <label class="form-label">{{ form.email.label }}</label>
-                                        {{ form.email }}
+                                <div class="field ">
+                                    <label class="form-label">{{ form.email.label }}</label>
+                                    {{ form.email }}
+                                    <div>
+                                        {% for error in form.email.errors %}
+                                            <small class="">
+                                                <i class="fa-solid fa-triangle-exclamation"></i>
+                                                {{ error }}
+                                            </small>
+                                            <br>
+                                        {% endfor %}
+                                    </div>
+                                    <div>
                                     </div>
                                 </div>
                                 <!-- email ends -->
 
                                 <!-- password1 starts -->
-                                <div class="col-lg-6">
-                                    <div class="field position-relative">
-                                        <label  class="form-label">{{ form.password1.label }}</label>
-                                        {{ form.password1 }}
-                                        <span class="toggle-password">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </span>
-                                    </div>
+                                <div class="field position-relative ">
+                                    <label  class="form-label">{{ form.password1.label }}</label>
+                                    {{ form.password1 }}
+                                    <span class="toggle-password">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </span>
                                 </div>
                                 <!-- password1 ends -->
 
                                 <!-- password2 starts -->
-                                <div class="col-lg-6">
-                                    <div class="field position-relative">
-                                        <label class="form-label">{{ form.password2.label }}</label>
-                                        {{ form.password2 }}
-                                        <span class="toggle-password">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </span>
+                                <div class="field position-relative ">
+                                    <label class="form-label">{{ form.password2.label }}</label>
+                                    {{ form.password2 }}
+                                    <span class="toggle-password">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </span>
+                                    <div>
+                                        {% for error in form.password2.errors %}
+                                            <small class="">
+                                                <i class="fa-solid fa-triangle-exclamation"></i>
+                                                {{ error }}
+                                            </small>
+                                            <br>
+                                        {% endfor %}
                                     </div>
                                 </div>
                                 <!-- password2 ends -->
 
-                               </div>
-
                                 <!-- register submit button -->
-                                <div class="d-flex justify-content-center align-items-center mt-4 mb-3">
+                                <div class="d-flex justify-content-center align-items-center  mt-3 mt-sm-4 mb-3">
                                     <button type="submit" class="btn btn-light fw-semibold">Create Account</button>
                                 </div>
                                
                             </form>
 
                             <div class="">
-                                <div class="d-flex justify-content-center">
+                                <div class="d-flex justify-content-center align-items-center text-center">
                                     <p class="mb-0 ">Already have an account ?
                                         <a href="{% url 'login' %}" class="btn text-white text-decoration-underline login-link fw-semibold">Login</a>
                                     </p>
