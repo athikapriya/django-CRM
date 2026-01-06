@@ -49,6 +49,8 @@
 
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
             color: #ffffff;
+
+            width : 320px;
         }
 
         .card h1,
@@ -115,6 +117,16 @@
         .sign-up-link {
             font-size: 0.95rem !important;
         }
+
+        .error-msg{
+            font-size: 0.85rem;
+        }
+
+        @media screen and (max-width: 400px) {
+            .card{
+                width: auto;
+            }
+        }
     </style> 
     <!-- internal stylesheet ends -->
 
@@ -127,18 +139,20 @@
             <div class="container min-vh-100 d-flex justify-content-center align-items-center">
                 <div class="d-flex flex-column">
 
-                    <!-- message starts -->
+                    <!-- success message starts -->
                     <div class="row">
                         {% for message in messages %}
-                            <p class="text-center text-white fs-5 fw-semibold mb-4">{{ message }}</p>
+                            {% if message.tags == 'success' %}
+                                <p class="text-center text-white fs-sm-5 fw-semibold mb-4">{{ message }}</p>
+                            {% endif %}
                         {% endfor %}
                     </div>
-                    <!-- message ends -->
+                    <!-- success message ends -->
 
 
                     <!-- login starts -->
                     <div class="row">
-                        <div class="col-10 col-sm-8 mx-auto">
+                        <div class="mx-auto">
                             <div class="card card-body p-4">
                                 <h1 class="fs-3 mb-3 fw-semibold text-center">Login </h1>
                                 <br>
@@ -167,6 +181,17 @@
                                             </div>
                                         </div>
 
+
+                                        <!-- error messages starts -->
+                                        {% for message in messages %}
+                                            {% if message.tags == 'info' %}
+                                                <p class="text-center text-white mt-3 mb-2 error-msg">
+                                                    <i class="fa-solid fa-triangle-exclamation"></i>
+                                                    {{ message }}</p>
+                                            {% endif %}
+                                        {% endfor %}
+                                        <!-- error messages ends -->
+
                                         <!-- Login button -->
                                         <div class="d-flex justify-content-center align-items-center  mt-3 mt-sm-4 mb-3">
                                             <button type="submit" class="btn btn-light fw-semibold">Login</button>
@@ -185,6 +210,9 @@
                                 </div>
                                 
                             </div>
+
+                            
+
                         </div>
                     </div>
                     <!-- login ends -->
