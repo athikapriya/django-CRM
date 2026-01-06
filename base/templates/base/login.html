@@ -125,60 +125,71 @@
     <!-- registration form starts -->
         <section id="login-form">
             <div class="container min-vh-100 d-flex justify-content-center align-items-center">
-                <div class="row">
-                    <div class="col-10 col-sm-8 mx-auto">
-                        <div class="card card-body p-4">
-                            <h1 class="fs-3 mb-3 fw-semibold text-center">Login </h4>
-                            <br>
+                <div class="d-flex flex-column">
 
-                            <form action="" method="POST">
-                                {% csrf_token %}
+                    <!-- message starts -->
+                    <div class="row">
+                        {% for message in messages %}
+                            <p class="text-center text-white fs-5 fw-semibold mb-4">{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                    <!-- message ends -->
 
-                               <div class="row">
-                               
-                                    <!-- username -->
-                                    <div class="">
-                                        <div class="field">
-                                            <label class="form-label">Username</label>
-                                            <input type="text" name="username" id="username" class="form-control" placeholder="Enter Username...">
+
+                    <!-- login starts -->
+                    <div class="row">
+                        <div class="col-10 col-sm-8 mx-auto">
+                            <div class="card card-body p-4">
+                                <h1 class="fs-3 mb-3 fw-semibold text-center">Login </h1>
+                                <br>
+
+                                <form action="" method="POST">
+                                    {% csrf_token %}
+
+                                <div class="row">
+                                
+                                        <!-- username -->
+                                        <div class="">
+                                            <div class="field">
+                                                <label class="form-label">Username</label>
+                                                <input type="text" name="username" id="username" class="form-control" placeholder="Enter Username...">
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <!-- password -->
-                                    <div class="">
-                                        <div class="field position-relative">
-                                            <label class="form-label">Password</label>
-                                            <input type="text" name="password" id="password" class="form-control" placeholder="Enter your password...">
-                                            <span class="toggle-password">
-                                                <i class="fa-solid fa-eye"></i>
-                                            </span>
+                                        <!-- password -->
+                                        <div class="">
+                                            <div class="field position-relative">
+                                                <label class="form-label">Password</label>
+                                                <input type="text" name="password" id="password" class="form-control" placeholder="Enter your password...">
+                                                <span class="toggle-password">
+                                                    <i class="fa-solid fa-eye"></i>
+                                                </span>
+                                            </div>
                                         </div>
+
+                                        <!-- Login button -->
+                                        <div class="d-flex justify-content-center align-items-center  mt-3 mt-sm-4 mb-3">
+                                            <button type="submit" class="btn btn-light fw-semibold">Login</button>
+                                        </div>
+
                                     </div>
+                                
+                                </form>
 
-                                    <!-- Login button -->
-                                    <div class="d-flex justify-content-center align-items-center mt-4 mb-3">
-                                        <button type="submit" class="btn btn-light fw-semibold">Login</button>
+                                <div class="">
+                                    <div class="d-flex justify-content-center align-items-center text-center">
+                                        <p class="mb-0 ">Don't have an account ?
+                                            <a href="{% url 'register' %}" class="btn text-white text-decoration-underline sign-up-link fw-semibold">Sign Up</a>
+                                        </p>
                                     </div>
-
                                 </div>
-                               
-                            </form>
-
-                            <!-- messages -->
-                            {% for message in messages %}
-                                <p>{{ message }}</p>
-                            {% endfor %}
-
-                            <div class="">
-                                <div class="d-flex justify-content-center align-items-center text-center">
-                                    <p class="mb-0 ">Don't have an account ?
-                                        <a href="{% url 'register' %}" class="btn text-white text-decoration-underline sign-up-link fw-semibold">Sign Up</a>
-                                    </p>
-                                </div>
+                                
                             </div>
+                        </div>
+                    </div>
+                    <!-- login ends -->
 
-                    </div>
-                    </div>
+
                 </div>
             </div>
         </section>
