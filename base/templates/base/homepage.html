@@ -37,30 +37,32 @@
             <div class="col-lg-8 gx-md-5 gy-4 gy-md-4 ">
                 <h3 class="fw-semibold pb-2 ">Orders :</h3>
                 <div class="card card-body">
-                    <table class="table table-sm">
-                        <tr>
-                            <th>Product</th>
-                            <th>Date Ordered</th>
-                            <th>Status</th>
-                            <th>Update</th>
-                            <th>Delete</th>
-                        </tr>
-
-                        {% for order in orders %}
+                    <div class="table-responsive">
+                        <table class="table table-sm align-middle table-bordered table-nowrap">
                             <tr>
-                                <td>{{ order.product }}</td>
-                                <td>{{ order.date_created | date:"M. j, Y" }}</td>
-                                <td>{{ order.status }}</td>
-                                <td>
-                                    <a href="{% url 'update_order' order.id %}?next={% url 'homepage' %}" class="btn btn-sm btn-info">Update</a>
-                                </td>
-                                <td>
-                                    <a href="{% url 'delete_order' order.id %}?next={% url 'homepage' %}" class="btn btn-sm btn-danger">Delete</a>
-                                </td>
+                                <th>Product</th>
+                                <th>Date Ordered</th>
+                                <th>Status</th>
+                                <th>Update</th>
+                                <th>Delete</th>
                             </tr>
-                        {% endfor %}
 
-                    </table>
+                            {% for order in orders %}
+                                <tr>
+                                    <td>{{ order.product }}</td>
+                                    <td>{{ order.date_created | date:"M. j, Y" }}</td>
+                                    <td>{{ order.status }}</td>
+                                    <td>
+                                        <a href="{% url 'update_order' order.id %}?next={% url 'homepage' %}" class="btn btn-sm btn-info">Update</a>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'delete_order' order.id %}?next={% url 'homepage' %}" class="btn btn-sm btn-danger">Delete</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                        </table>
+                    </div>
                 </div>
             </div>
 
