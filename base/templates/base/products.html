@@ -1,5 +1,15 @@
 {% extends 'base/main.html' %}
 
+{% block css %}
+<style>
+    .table td,
+    .table th {
+        padding: 0.6rem 0.75rem;
+        font-size: 0.9rem;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <section id="products-section">
     <div class="container my-4">
@@ -8,7 +18,7 @@
                 <h3 class="fw-semibold">Products :</h3>
                 <hr>
                 <div class="table-responsive">
-                    <table class="table table-sm align-middle table-bordered table-nowrap">
+                    <table class="table table-sm align-middle table-nowrap">
 
                         <tr>
                             <th>Products</th>
