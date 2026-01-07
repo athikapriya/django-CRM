@@ -43,7 +43,7 @@
         <!-- second section starts -->
         <div class="row my-4">
             <div class="card card-body">
-                <form action="" method="get">
+                <form action="" method="get" >
                     <div class="row g-2 align-items-end">
                         <!-- product filter -->
                         <div class="col-sm-6 col-lg-3 gx-4 gy-3 ">
@@ -105,39 +105,41 @@
         <!-- third section starts -->
         <div class="row my-4">
             <div class="card card-body">
-                <table class="table table-sm">
-                    <tr>
-                        <th>Product</th>
-                        <th>Note</th>
-                        <th>Category</th>
-                        <th>Date Ordered</th>
-                        <th>Status</th>
-                        <th>Update</th>
-                        <th>Remove</th>
-                    </tr>
-
-                    {% for order in orders %}
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle table-bordered table-nowrap">
                         <tr>
-                            <td>{{ order.product }}</td>
-                            <td>
-                                {% if order.note %}
-                                    {{ order.note }}
-                                {% else %}
-                                    <span class="text-muted">None</span>
-                                {% endif %}
-                            </td>
-                            <td>{{ order.product.category }}</td>
-                            <td>{{ order.date_created | date:"M. j, Y" }}</td>
-                            <td>{{ order.status }}</td>
-                            <td>
-                                <a href="{% url 'update_order' order.id %}?next={% url 'customer' customer.id %}" class="btn btn-sm btn-info">Update</a>
-                            </td>
-                            <td>
-                                <a href="{% url 'delete_order' order.id %}?next={% url 'customer' customer.id %}" class="btn btn-sm btn-danger">Delete</a>
-                            </td>
+                            <th>Product</th>
+                            <th>Note</th>
+                            <th>Category</th>
+                            <th>Date Ordered</th>
+                            <th>Status</th>
+                            <th>Update</th>
+                            <th>Remove</th>
                         </tr>
-                    {% endfor %}
-                </table>
+
+                        {% for order in orders %}
+                            <tr>
+                                <td>{{ order.product }}</td>
+                                <td>
+                                    {% if order.note %}
+                                        {{ order.note }}
+                                    {% else %}
+                                        <span class="text-muted">None</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ order.product.category }}</td>
+                                <td>{{ order.date_created | date:"M. j, Y" }}</td>
+                                <td>{{ order.status }}</td>
+                                <td>
+                                    <a href="{% url 'update_order' order.id %}?next={% url 'customer' customer.id %}" class="btn btn-sm btn-info">Update</a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'delete_order' order.id %}?next={% url 'customer' customer.id %}" class="btn btn-sm btn-danger">Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
             </div>
         </div>
         <!-- third section ends -->
@@ -146,3 +148,27 @@
 </section>
 
 {% endblock %}
+
+
+<!-- js for note auto filter -->
+{% block scripts %}
+
+<script>
+    function debounce(func, delay) {
+    let timeout;
+        return function(...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), delay);
+        };
+    }
+
+
+    const noteInput = document.querySelector('input[name="note"]');
+    if (noteInput) {
+        noteInput.addEventListener('input', debounce(function() {
+            this.form.submit();
+        }, 500)); 
+    }
+</script>
+{% endblock %}
+<!-- js for note auto filter -->
