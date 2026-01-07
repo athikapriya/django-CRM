@@ -1,5 +1,30 @@
 {% extends 'base/main.html' %}
 
+{% block css %}
+<style>
+    #order-filter-form select,
+    #order-filter-form input {
+        height: 34px;
+        font-size: 0.85rem;
+    }
+
+    #order-filter-form {
+        margin-bottom: 0;
+    }
+
+    .table-responsive table {
+        min-width: 900px;
+    }
+
+    .table-nowrap th,
+    .table-nowrap td {
+        white-space: nowrap;
+    }
+
+</style>
+{% endblock %}
+
+
 {% block content %}
 
 <section id="customer">
@@ -40,66 +65,71 @@
         <!-- first section ends -->
 
 
-        <!-- second section starts -->
-        <div class="row my-4">
-            <div class="card card-body">
-                <form action="" method="get" >
-                    <div class="row g-2 align-items-end">
-                        <!-- product filter -->
-                        <div class="col-sm-6 col-lg-3 gx-4 gy-3 ">
+
+        <!-- FILTER SECTION -->
+        <div class="row my-3">
+            <div class="card card-body py-3">
+
+                <form method="get" id="order-filter-form">
+
+                    <!-- COMPACT ROW -->
+                    <div class="row gx-2 gy-2 align-items-end">
+
+                        <!-- Product -->
+                        <div class="col-6 col-md-3 col-lg-2">
+                            <label class="form-label small fw-semibold mb-1">
+                                Product
+                            </label>
                             {{ myFilter.form.product }}
                         </div>
 
-                        <!-- status filter -->
-                        <div class="col-sm-6 col-lg-3  gx-4 gy-3 ">
+                        <!-- Status -->
+                        <div class="col-6 col-md-3 col-lg-2">
+                            <label class="form-label small fw-semibold mb-1">
+                                Status
+                            </label>
                             {{ myFilter.form.status }}
                         </div>
 
-                        <!-- start date filter -->
-                        <div class="col-sm-6 col-lg-3 gx-4 gy-3 ">
-                            <div class="row g-1 align-items-center">
-                                <div class="col-auto">
-                                    <label class="form-label mb-0 text-nowrap me-1">
-                                        From
-                                    </label>
-                                </div>
-                                <div class="col">
-                                    {{ myFilter.form.start_date }}
-                                </div>
-                            </div>
+                        <!-- From date -->
+                        <div class="col-6 col-md-3 col-lg-2">
+                            <label class="form-label small fw-semibold mb-1">
+                                From
+                            </label>
+                            {{ myFilter.form.start_date }}
                         </div>
 
-                        <!-- end date filter -->
-                        <div class="col-sm-6 col-lg-3 gx-4 gy-3 ">
-                            <div class="row g-1 align-items-center">
-                                <div class="col-auto">
-                                    <label class="form-label mb-0 text-nowrap me-1">
-                                        To
-                                    </label>
-                                </div>
-                                <div class="col">
-                                    {{ myFilter.form.end_date }}
-                                </div>
-                            </div>
+                        <!-- To date -->
+                        <div class="col-6 col-md-3 col-lg-2">
+                            <label class="form-label small fw-semibold mb-1">
+                                To
+                            </label>
+                            {{ myFilter.form.end_date }}
                         </div>
 
-                        <!-- note filter -->
-                        <div class="col-lg-6  gy-3 gx-4">
+                        <!-- Note search -->
+                        <div class="col-12 col-lg-3">
+                            <label class="form-label small fw-semibold mb-1">
+                                Keyword
+                            </label>
                             {{ myFilter.form.note }}
                         </div>
 
-                        <!-- search button -->
-                        <div class="col-lg-12 gx-4 gy-3">
-                            <button type="submit" class="btn btn-primary btn-sm">
-                                Search
-                            </button>
+                        <!-- Clear -->
+                        <div class="col-12 col-lg-1 text-lg-end">
+                            <a href="{% url 'customer' customer.id %}"
+                            class="btn btn-primary btn-sm w-100 mt-1">
+                                Clear
+                            </a>
                         </div>
+
                     </div>
 
                 </form>
+
             </div>
         </div>
-        <!-- second section ends -->
+        <!-- FILTER SECTION END -->
 
 
         <!-- third section starts -->
@@ -109,7 +139,7 @@
                     <table class="table table-sm align-middle table-bordered table-nowrap">
                         <tr>
                             <th>Product</th>
-                            <th>Note</th>
+                            <th>Remarks</th>
                             <th>Category</th>
                             <th>Date Ordered</th>
                             <th>Status</th>
@@ -154,21 +184,31 @@
 {% block scripts %}
 
 <script>
-    function debounce(func, delay) {
-    let timeout;
-        return function(...args) {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => func.apply(this, args), delay);
+
+    function debounce(fn, delay = 500) {
+        let timer;
+        return (...args) => {
+            clearTimeout(timer);
+            timer = setTimeout(() => fn.apply(this, args), delay);
         };
     }
 
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("order-filter-form");
+        if (!form) return;
 
-    const noteInput = document.querySelector('input[name="note"]');
-    if (noteInput) {
-        noteInput.addEventListener('input', debounce(function() {
-            this.form.submit();
-        }, 500)); 
-    }
+        const autoInputs = form.querySelectorAll("[data-auto-submit]");
+
+        autoInputs.forEach(input => {
+            const eventType = input.tagName === "SELECT" ? "change" : "input";
+
+            input.addEventListener(
+                eventType,
+                debounce(() => form.submit())
+            );
+        });
+    });
+
 </script>
 {% endblock %}
 <!-- js for note auto filter -->
