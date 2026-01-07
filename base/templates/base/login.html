@@ -140,20 +140,22 @@
                 <div class="d-flex flex-column">
 
                     <!-- success message starts -->
-                    <div class="row">
-                        {% for message in messages %}
-                            {% if message.tags == 'success' %}
-                                <p class="text-center text-white fs-sm-5 fw-semibold mb-4">{{ message }}</p>
-                            {% endif %}
-                        {% endfor %}
+                    <div class="row mb-2">
+                        <div class=" mx-auto text-center">
+                            {% for message in messages %}
+                                {% if message.tags == 'success' %}
+                                    <p class="text-center text-white fs-sm-5 fw-semibold mb-4">{{ message }}</p>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     </div>
                     <!-- success message ends -->
 
 
                     <!-- login starts -->
                     <div class="row">
-                        <div class="mx-auto">
-                            <div class="card card-body p-4">
+                        <div class="col-12 mx-auto">
+                            <div class="card card-body p-4 mx-auto">
                                 <h1 class="fs-3 mb-3 fw-semibold text-center">Login </h1>
                                 <br>
 
