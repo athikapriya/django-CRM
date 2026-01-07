@@ -5,49 +5,64 @@ from django.forms import inlineformset_factory
 from .filters import OrderFilter
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 
 # register page views
 def registerPage(request):
 
-    form = CreateUserForm()
-    if request.method == "POST":
-        form = CreateUserForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Account created successfully. You can now login!" )
-            return redirect("login")
+    if request.user.is_authenticated:
+        return redirect('homepage')
+    else:
+        form = CreateUserForm()
+        if request.method == "POST":
+            form = CreateUserForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Account created successfully. You can now login!" )
+                return redirect("login")
 
-    context= {
-        "form" : form
-    }
-    return render(request, 'base/register.html', context)
+        context= {
+            "form" : form
+        }
+        return render(request, 'base/register.html', context)
 
 
 
 # login page views
 def loginPage(request):
 
-    if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
+    if request.user.is_authenticated:
+        return redirect("homepage")
+    else:
+        if request.method == "POST":
+            username = request.POST.get("username")
+            password = request.POST.get("password")
 
-        user = authenticate(request, username=username, password=password)
+            user = authenticate(request, username=username, password=password)
 
-        if user is not None:
-            login(request, user)
-            return redirect("homepage")
-        else:
-            messages.info(request, "Username or password is incorrect !")
-    context = {
+            if user is not None:
+                login(request, user)
+                return redirect("homepage")
+            else:
+                messages.info(request, "Username or password is incorrect !")
+        context = {
 
-    }
-    return render(request, 'base/login.html', context)
+        }
+        return render(request, 'base/login.html', context)
+
+
+
+# logout view
+def logoutUser(request):
+    logout(request)
+    return redirect("login")
 
 
 
 # homepage view
+@login_required(login_url="login")
 def homepage(request):
     customers = Customer.objects.all()
     orders = Order.objects.all()
@@ -66,6 +81,7 @@ def homepage(request):
 
 
 # products view
+@login_required(login_url="login")
 def products(request):
     products = Product.objects.filter()
     context = {
@@ -76,6 +92,7 @@ def products(request):
 
 
 # customer view
+@login_required(login_url="login")
 def customer(request, pk):
     customer = Customer.objects.get(id=pk)
     orders = customer.order_set.all()
@@ -96,6 +113,7 @@ def customer(request, pk):
 
 
 # createOrder View
+@login_required(login_url="login")
 def CreateOrder(request, pk):
 
     OrderFormSet = inlineformset_factory(Customer, Order, form=OrderForm, fields=("product", 'status', 'note'), extra=4)
@@ -119,6 +137,7 @@ def CreateOrder(request, pk):
 
 
 # updateOrder Views
+@login_required(login_url="login")
 def UpdateOrder(request, pk):
     order = Order.objects.get(id=pk)
     form = OrderForm(instance=order)
@@ -139,6 +158,7 @@ def UpdateOrder(request, pk):
 
 
 # deleteOrder Views
+@login_required(login_url="login")
 def DeleteOrder(request, pk):
     order = Order.objects.get(id=pk)
     next_url = request.GET.get("next", "/")
