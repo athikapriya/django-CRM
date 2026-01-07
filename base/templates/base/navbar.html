@@ -1,3 +1,17 @@
+{% block css %}
+<style>
+    .logout-btn{
+        border: 1px solid #fff;
+        color: #fff;
+    }
+
+    .logout-btn:hover{
+        color : #0b1f2a ;
+        background-color: #fff;
+    }
+</style>
+{% endblock %}
+
 {% load static %}
 <nav class="navbar navbar-expand-lg">
     <div class="container">
@@ -13,7 +27,7 @@
         </button>
 
         <!-- navbar-nav -->
-        <div class="collapse navbar-collapse justify-content-end text-center" id="myNav">
+        <div class="collapse navbar-collapse text-center" id="myNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a href="{% url 'homepage' %}" class="nav-link text-white">Dashboard</a>
@@ -24,7 +38,10 @@
             </ul>
         </div>
 
-
+        <span class="text-white">Hello, {{ request.user }}</span>
+        <span>
+            <a href="{% url 'logout' %}"  class="btn btn-sm btn-outline-link ms-3 logout-btn fw-semibold" style="border: 1px solid #fff;">Logout</a>
+        </span>
 
     </div>
 </nav>
