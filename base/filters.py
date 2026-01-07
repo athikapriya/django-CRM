@@ -10,7 +10,7 @@ class OrderFilter(django_filters.FilterSet):
         empty_label="All Products",
         widget = forms.Select(attrs={
         "class" : "form-select",
-        "onchange" : "this.form.submit();"
+        "data-auto-submit": "true"
         })
     )
 
@@ -19,7 +19,7 @@ class OrderFilter(django_filters.FilterSet):
         empty_label = "Order Status",
         widget = forms.Select(attrs={
         "class" : "form-select",
-        "onchange" : "this.form.submit();"
+        "data-auto-submit": "true"
         })
     )
 
@@ -30,7 +30,7 @@ class OrderFilter(django_filters.FilterSet):
         widget = forms.DateInput(attrs={
             "type" : "date",
             "class" : "form-control form-control-sm",
-            "placeholder" : "From date"
+            "data-auto-submit": "true"
         })
     )
 
@@ -41,17 +41,18 @@ class OrderFilter(django_filters.FilterSet):
         widget = forms.DateInput(attrs={
             "type" : "date",
             "class" : "form-control form-control-sm",
-            "placeholder" : "To date"
+            "data-auto-submit": "true"
         }) 
     )
 
     note = CharFilter(
         field_name="note",
         lookup_expr="icontains",
-        label = "",
+        label = "Keyword",
         widget = forms.TextInput(attrs={
-            "placeholder" : "Search anything...",
-            "class" : "form-control"
+            "placeholder" : "Search by Keyword...",
+            "class" : "form-control",
+            "data-auto-submit": "true"
         })
     )
     
