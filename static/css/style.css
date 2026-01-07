@@ -27,6 +27,15 @@ html{
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.09), 0 1px 3px rgba(0, 0, 0, 0.07);;
 }
 
+.table-responsive table {
+    min-width: 900px;
+}
+
+.table-nowrap th,
+.table-nowrap td {
+    white-space: nowrap;
+}
+
 
 /* reset code and common code ends here */
 
