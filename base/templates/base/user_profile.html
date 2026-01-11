@@ -1,5 +1,11 @@
 {% extends 'base/main.html' %}
 {% load static %}
 {% block content %}
-<h1>User Profile</h1>
+<section class="my-4">
+    <div class="container">
+        <div class="row">
+            <h1>Hello, {{request.user}}</h1>
+        </div>
+    </div>
+</section>
 {% endblock %}
