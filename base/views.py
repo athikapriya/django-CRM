@@ -6,31 +6,31 @@ from .filters import OrderFilter
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from .decorators import unauthenticated_user
 
 
 
 # register page views
+@unauthenticated_user
 def registerPage(request):
 
-    if request.user.is_authenticated:
-        return redirect('homepage')
-    else:
-        form = CreateUserForm()
-        if request.method == "POST":
-            form = CreateUserForm(request.POST)
-            if form.is_valid():
-                form.save()
-                messages.success(request, "Account created successfully. You can now login!" )
-                return redirect("login")
+    form = CreateUserForm()
+    if request.method == "POST":
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Account created successfully. You can now login!" )
+            return redirect("login")
 
-        context= {
-            "form" : form
-        }
-        return render(request, 'base/register.html', context)
+    context= {
+        "form" : form
+    }
+    return render(request, 'base/register.html', context)
 
 
 
 # login page views
+@unauthenticated_user
 def loginPage(request):
 
     if request.user.is_authenticated:
@@ -77,6 +77,15 @@ def homepage(request):
         "total_delivered" : total_delivered
     }
     return render(request, 'base/homepage.html', context)
+
+
+    
+# user profile view
+def userProfile(request):
+    context = {
+
+    }
+    return render(request, 'base/user_profile.html', context)
 
 
 
