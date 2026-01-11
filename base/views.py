@@ -6,7 +6,7 @@ from .filters import OrderFilter
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .decorators import unauthenticated_user
+from .decorators import unauthenticated_user, allowed_users
 
 
 
@@ -61,8 +61,18 @@ def logoutUser(request):
 
 
 
+# unauthorized user
+def unauthorized(request):
+    context = {
+
+    }
+    return render(request, "base/unauthorized.html", context)
+
+
+
 # homepage view
 @login_required(login_url="login")
+
 def homepage(request):
     customers = Customer.objects.all()
     orders = Order.objects.all()
@@ -91,6 +101,7 @@ def userProfile(request):
 
 # products view
 @login_required(login_url="login")
+@allowed_users(['admin'])
 def products(request):
     products = Product.objects.filter()
     context = {
@@ -102,6 +113,7 @@ def products(request):
 
 # customer view
 @login_required(login_url="login")
+@allowed_users(['admin'])
 def customer(request, pk):
     customer = Customer.objects.get(id=pk)
     orders = customer.order_set.all()
@@ -123,6 +135,7 @@ def customer(request, pk):
 
 # createOrder View
 @login_required(login_url="login")
+@allowed_users(['admin'])
 def CreateOrder(request, pk):
 
     OrderFormSet = inlineformset_factory(Customer, Order, form=OrderForm, fields=("product", 'status', 'note'), extra=4)
@@ -147,6 +160,7 @@ def CreateOrder(request, pk):
 
 # updateOrder Views
 @login_required(login_url="login")
+@allowed_users(['admin'])
 def UpdateOrder(request, pk):
     order = Order.objects.get(id=pk)
     form = OrderForm(instance=order)
@@ -168,6 +182,7 @@ def UpdateOrder(request, pk):
 
 # deleteOrder Views
 @login_required(login_url="login")
+@allowed_users(['admin'])
 def DeleteOrder(request, pk):
     order = Order.objects.get(id=pk)
     next_url = request.GET.get("next", "/")
