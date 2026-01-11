@@ -79,12 +79,19 @@ def homepage(request):
     total_orders = orders.count()
     total_pending = orders.filter(status="Pending").count()
     total_delivered = orders.filter(status="Delivered").count()
+
+    can_view_dashboard = (
+        request.user.is_superuser or 
+        request.user.groups.filter(name="admin").exists()
+    )
+
     context = {
         "customers" : customers,
         "orders" : orders,
         "total_orders" : total_orders,
         "total_pending" : total_pending,
-        "total_delivered" : total_delivered
+        "total_delivered" : total_delivered,
+        "can_view_dashboard" : can_view_dashboard
     }
     return render(request, 'base/homepage.html', context)
 
