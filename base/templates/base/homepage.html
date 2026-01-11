@@ -21,9 +21,9 @@
 <section id="dashboard-section">
     <div class="container ">
         <div class="row">
-            
+            {% if can_view_dashboard %}
 
-            <!-- customers section -->
+            <!-- customers section starts -->
             <div class="col-lg-4 gx-md-5 gy-4 gy-md-4 ">
                 <h3 class="fw-semibold pb-2">Customers : </h3>
                 <div class="card card-body">
@@ -82,6 +82,13 @@
             </div>
 
         </div>
+
+        {% else %}
+            <div class="alert alert-warning text-center mt-5">
+                You don’t have permission to view dashboard data.
+            </div>
+        {% endif %}
+
     </div>
 </section>
 {% endblock %}
