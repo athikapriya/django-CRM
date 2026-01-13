@@ -1,11 +1,126 @@
 {% extends 'base/main.html' %}
 {% load static %}
+
+{% block css %}
+<style>
+    .table td,
+    .table th {
+        padding: 0.6rem 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    .table thead th {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+    }
+</style>
+{% endblock %}
+
+
 {% block content %}
-<section class="my-4">
-    <div class="container">
-        <div class="row">
-            <h1>Hello, {{request.user}}</h1>
+<section id="user-profile">
+    <div class="container my-4">
+        <div class="row g-4 mb-4">
+            <!-- Profile Info starts -->
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; font-size: 1.6rem;">
+                            {{ request.user.username|first|upper }}
+                        </div>
+                        <h5 class="mb-1">{{ request.user.customer.name }}</h5>
+                        <p class="text-muted mb-0">{{ request.user.email }}</p>
+                        <small class="text-muted">Customer since {{ request.user.customer.date_created|date:"M Y" }}</small>
+                    </div>
+                </div>
+            </div>
+            <!-- Profile info ends -->
+
+            <!-- status  starts -->
+            <div class="col-md-8">
+                <div class="row g-3">
+                    <div class="col-sm-4" >
+                        <div class="card text-center shadow-sm" id="total-orders">
+                            <div class="card-body text-white">
+                                <h5>Total Orders</h5>
+                                <hr>
+                                <h3 class="fw-semibold">{{ total_orders }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="card text-center shadow-sm" id="orders-pending">
+                            <div class="card-body text-white">
+                                <h5>Orders Pending</h5>
+                                <hr>
+                                <h3 class="fw-semibold">{{ total_pending }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="card text-center shadow-sm" id="orders-delivered">
+                            <div class="card-body text-white">
+                                <h5>Orders Delivered</h5>
+                                <hr>
+                                <h3 class="fw-semibold">{{ total_delivered }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- status ends -->
         </div>
+
+        <!-- customer order section starts -->
+        <div class="row my-4">
+            <div class="card shadow-sm">
+                <div class="card-header" style="background-color: transparent;">
+                    <h5 class="my-2">Order History</h5>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-secondary">
+                            <tr>
+                                <th>Product</th>
+                                <th>Category</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th class="text-end">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                            <tr>
+                                <td>{{ order.product.name }}</td>
+                                <td>{{ order.product.category }}</td>
+                                <td>{{ order.date_created|date:"M d, Y" }}</td>
+                                <td>
+                                    {% if order.status == "Delivered" %}
+                                        <span class="badge bg-success">{{ order.status }}</span>
+                                    {% elif order.status == "Pending" %}
+                                        <span class="badge bg-warning text-dark">{{ order.status }}</span>
+                                    {% else %}
+                                        <span class="badge bg-info">{{ order.status }}</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-end">${{ order.product.price }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-4">
+                                    No orders found.
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- customer order section ends -->
     </div>
 </section>
 {% endblock %}
