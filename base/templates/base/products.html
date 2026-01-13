@@ -18,7 +18,7 @@
                 <h3 class="fw-semibold">Products :</h3>
                 <hr>
                 <div class="table-responsive">
-                    <table class="table table-sm align-middle table-nowrap">
+                    <table class="table table-sm align-middle table-nowrap table-hover">
 
                         <tr>
                             <th>Products</th>
@@ -28,8 +28,15 @@
 
                         {% for product in products %}
                             <tr>
-                                <td>{{ product.name}} </td>
-                                <td>{{ product.category }}</td>
+                                <td class="fw-semibold">
+                                   <i class="bi bi-box-seam me-1 text-secondary"></i>
+                                    {{ product.name }}
+                                </td>
+                                <td>
+                                    <span class="badge bg-light text-dark border">
+                                        {{ product.category }}
+                                    </span>
+                                </td>
                                 <td>${{ product.price }}</td>
                             </tr>
                         {% endfor %}

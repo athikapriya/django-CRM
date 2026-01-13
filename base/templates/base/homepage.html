@@ -39,7 +39,7 @@
                                 <td>{{ customer.name }}</td>
                                 <td>{{ customer.phone }}</td>
                                 <td>
-                                    <a href="{% url 'customer' customer.id %}" class="btn btn-sm btn-info">View</a>
+                                    <a href="{% url 'customer' customer.id %}" class="btn btn-sm btn-primary">View</a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -53,25 +53,47 @@
                 <h3 class="fw-semibold pb-2 ">Orders :</h3>
                 <div class="card card-body">
                     <div class="table-responsive">
-                        <table class="table table-sm align-middle table-bordered table-nowrap">
+                        <table class="table table-sm align-middle table-bordered table-nowrap table-hover">
                             <tr>
                                 <th>Product</th>
                                 <th>Date Ordered</th>
                                 <th>Status</th>
-                                <th>Update</th>
-                                <th>Delete</th>
+                                <th class="text-center">Update</th>
+                                <th class="text-center">Delete</th>
                             </tr>
 
                             {% for order in orders %}
                                 <tr>
-                                    <td>{{ order.product }}</td>
-                                    <td>{{ order.date_created | date:"M. j, Y" }}</td>
-                                    <td>{{ order.status }}</td>
-                                    <td>
-                                        <a href="{% url 'update_order' order.id %}?next={% url 'homepage' %}" class="btn btn-sm btn-info">Update</a>
+                                    <td class="fw-semibold">
+                                        <i class="bi bi-box-seam me-1 text-secondary"></i>
+                                        {{ order.product.name }}
                                     </td>
-                                    <td>
-                                        <a href="{% url 'delete_order' order.id %}?next={% url 'homepage' %}" class="btn btn-sm btn-danger">Delete</a>
+                                    <td class="text-muted">
+                                        <i class="bi bi-calendar3 me-1"></i>
+                                        {{ order.date_created|date:"M j, Y" }}
+                                    </td>
+                                     <td>
+                                        {% if order.status == "Delivered" %}
+                                            <span class="badge bg-success">{{ order.status }}</span>
+                                        {% elif order.status == "Pending" %}
+                                            <span class="badge bg-warning text-dark">{{ order.status }}</span>
+                                        {% else %}
+                                            <span class="badge bg-info">{{ order.status }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="{% url 'update_order' order.id %}?next={% url 'homepage'  %}"
+                                        class="btn btn-sm btn-outline-primary"
+                                        title="Update" >
+                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        </a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="{% url 'delete_order' order.id %}?next={% url 'homepage' %}"
+                                        class="btn btn-sm btn-outline-danger"
+                                        title="Delete">
+                                            <i class="fa-solid fa-trash-arrow-up"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             {% endfor %}
