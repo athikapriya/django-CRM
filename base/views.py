@@ -23,7 +23,8 @@ def registerPage(request):
             username = form.cleaned_data.get("username")
 
             group = Group.objects.get(name="customer")
-            user.Group.add(group)
+            user.groups.add(group)
+            
             messages.success(request, "Account created successfully. You can now login!" )
             return redirect("login")
 
@@ -99,9 +100,19 @@ def homepage(request):
 
     
 # user profile view
+@login_required(login_url="login")
+@allowed_users(['customer'])
 def userProfile(request):
-    context = {
 
+    orders = request.user.customer.order_set.all()
+    total_orders = orders.count()
+    total_pending = orders.filter(status="Pending").count()
+    total_delivered = orders.filter(status="Delivered").count()
+    context = {
+        "orders" : orders,
+        "total_orders" : total_orders,
+        "total_pending" : total_pending,
+        "total_delivered" : total_delivered
     }
     return render(request, 'base/user_profile.html', context)
 
