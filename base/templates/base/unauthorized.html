@@ -38,7 +38,18 @@
     <div style="text-align:center; margin-top:40px;" >
         <h2>403 - Access Denied</h2>
         <p>You are not authorized to view this page.</p>
-        <a href="{% url 'homepage' %}">Go back to Home</a>
+        <!-- <a href="{% url 'homepage' %}">Go back to Home</a> -->
+        {% if request.user.is_superuser %}
+            <a href="{% url 'homepage' %}">Admin Homepage</a>
+        {% else %}
+            {% for group in request.user.groups.all %}
+                {% if group.name == "admin" %}
+                    <a href="{% url 'homepage' %}">Admin Homepage</a>
+                {% elif group.name == "customer" %}
+                    <a href="{% url 'user' %}">Go to your Profile</a>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
     </div>
     
     <!-- bootstrap js -->
