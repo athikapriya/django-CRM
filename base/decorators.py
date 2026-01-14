@@ -26,7 +26,7 @@ def allowed_users(allowed_roles=None):
             if request.user.is_superuser:
                 return view_func(request, *args, **kwargs)
 
-            user_groups = request.user.groups.values_list("name", flat=True)
+            user_groups = list(request.user.groups.values_list("name", flat=True))
 
             if any(role in user_groups for role in allowed_roles):
                 return view_func(request, *args, **kwargs)
