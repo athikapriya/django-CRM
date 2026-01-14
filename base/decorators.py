@@ -38,16 +38,16 @@ def allowed_users(allowed_roles=None):
     return decorators
 
 
-
 def admin_only(view_func):
+    @login_required(login_url="login")
     def wrapper_func(request, *args, **kwargs):
-        if request.user.groups.exists():
-            group = request.user.groups.all()[0].name
 
-        if group == "customer":
-            return redirect("user")
-        
-        if group == 'admin':
+        if request.user.is_superuser:
             return view_func(request, *args, **kwargs)
-        
+
+        if request.user.groups.filter(name="admin").exists():
+            return view_func(request, *args, **kwargs)
+
+        return redirect("unauthorized")
+
     return wrapper_func
