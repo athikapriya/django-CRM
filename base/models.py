@@ -10,7 +10,7 @@ class Customer(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.name
+        return self.name or (self.user.username if self.user else "Customer")
 
 
 
@@ -37,7 +37,7 @@ class Product(models.Model):
     tag = models.ManyToManyField(Tag)
 
     def __str__(self):
-        return self.name
+        return self.name or "Unnamed Product"
 
 
 
@@ -56,4 +56,6 @@ class Order(models.Model):
     note = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return self.product.name
+        if self.product:
+            return self.product.name
+        return "Order"
