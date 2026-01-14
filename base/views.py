@@ -7,7 +7,6 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users, admin_only
-from django.contrib.auth.models import Group
 
 
 
@@ -20,18 +19,16 @@ def registerPage(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             user = form.save()
+
             username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password1")
 
-            group = Group.objects.get(name="customer")
-            user.groups.add(group)
-
-            Customer.objects.create(
-                user = user,
-                name = user.username,
-                email = user.email
-            )
+            user = authenticate(request, username=username, password=password)
+            if user:
+                login(request, user)
+                return redirect("user")
             
-            messages.success(request, "Account created successfully. You can now login!" )
+            messages.success(request, "Account created successfully. Welcome {username}" )
             return redirect("login")
 
     context= {
@@ -52,7 +49,14 @@ def loginPage(request):
 
         if user is not None:
             login(request, user)
-            return redirect("homepage")
+
+            if user.is_superuser or user.groups.filter(name="admin").exists():
+                return redirect("homepage")
+            elif user.groups.filter(name="customer").exists():
+                return redirect("user")
+            else:
+                return redirect("unauthorized")
+            
         else:
             messages.info(request, "Username or password is incorrect !")
     context = {
