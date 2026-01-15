@@ -28,9 +28,10 @@ html{
 }
 
 .table th {
-        font-size: 0.85rem;
-        text-transform: uppercase;
-    }
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
 /* reset code and common code ends here */
 
 
@@ -107,3 +108,34 @@ footer p{
 }
 
 /* footer ends */
+
+
+/* pagination starts here */
+.pagination{
+    background-color: white !important;
+}
+
+.pagination .page-item {
+    margin: 0 0.2rem; 
+}
+
+.pagination .page-link {
+    color: #405189; 
+    background-color: white; 
+    border: 1px solid #405189;
+    padding: 0.2rem 0.55rem 0.3rem;
+    border-radius: 0.25rem;
+    font-weight: 500;
+    font-size: 0.75rem;
+}
+
+.pagination .page-item.active .page-link {
+    color: white; 
+    background-color: #405189; 
+     border-color: #405189;
+}
+
+.pagination .page-link i {
+    vertical-align: middle;
+}
+/* pagination ends here */
