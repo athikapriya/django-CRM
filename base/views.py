@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users, admin_only
+from django.core.paginator import Paginator
 
 
 
@@ -87,10 +88,15 @@ def unauthorized(request):
 @admin_only
 def homepage(request):
     customers = Customer.objects.all()
-    orders = Order.objects.all()
-    total_orders = orders.count()
-    total_pending = orders.filter(status="Pending").count()
-    total_delivered = orders.filter(status="Delivered").count()
+
+    order_list = Order.objects.order_by("-date_created")
+    paginator = Paginator(order_list, 5)
+    page_number = request.GET.get("page")
+    orders = paginator.get_page(page_number)
+
+    total_orders = order_list.count()
+    total_pending = order_list.filter(status="Pending").count()
+    total_delivered = order_list.filter(status="Delivered").count()
 
     can_view_dashboard = (
         request.user.is_superuser or 
