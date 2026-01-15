@@ -32,6 +32,14 @@ html{
     text-transform: uppercase;
 }
 
+.page-link:focus,
+.page-link:active,
+.btn:focus,
+.btn:active,
+.form-control:focus {
+    outline: none !important;    
+    box-shadow: none !important;    
+}
 /* reset code and common code ends here */
 
 
