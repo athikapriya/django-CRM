@@ -11,6 +11,16 @@
         background-color: #fff;
         border : 1px solid #0b1f2a;
     }
+
+    .user-link:hover{
+        background-color: var(--primary-color) !important;
+        color: #fff;
+    }
+
+    .logout-btn:hover{
+        color: red !important;
+        border-color: transparent !important;
+    }
 </style>
 {% endblock %}
 
@@ -42,12 +52,55 @@
             {% endif %}
         </div>
 
-        <span class="text-white">Hello, 
-            <a href="{% url 'user' %}">{{ request.user }}</a>
-        </span>
-        <span>
-            <a href="{% url 'logout' %}"  class="btn btn-sm btn-outline-link ms-3 logout-btn fw-semibold" style="border: 1px solid #fff;">Logout</a>
-        </span>
+        
+        <!-- user profile starts -->
+        <div class="d-flex align-items-center ms-auto">
+
+            {% if request.user.is_staff %}
+                <!-- ADMIN (non-clickable, no dropdown) -->
+                <span class="text-white fw-semibold">
+                    Hello, {{ request.user.username }}
+                </span>
+                <span>
+                    <a href="{% url 'logout' %}"  class="btn btn-sm btn-outline-link ms-3 logout-btn fw-semibold" style="border: 1px solid #fff;">
+                        <i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a>
+                </span>
+
+            {% else %}
+                <!-- CUSTOMER / STAFF (dropdown) -->
+                <div class="dropdown">
+                    <a href="#"
+                    class="text-white fw-semibold dropdown-toggle text-decoration-none"
+                    id="userDropdown"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                        Hello, {{ request.user.username }}
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end shadow">
+                        <li>
+                            <a class="dropdown-item user-link" href="{% url 'user' %}">
+                                <i class="fa-solid fa-user me-2"></i> Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item user-link" href="#">
+                                <i class="fa-solid fa-gear me-2"></i> Settings
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item text-danger logout-btn" href="{% url 'logout' %}">
+                                <i class="fa-solid fa-right-from-bracket me-2"></i> Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
+
+        </div>
+        <!-- user profile ends -->
+
 
     </div>
 </nav>
