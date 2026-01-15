@@ -16,7 +16,7 @@
 }
 
 body{
-    background-color: #f2fafa;
+    background-color: #EFEFF5;
 }
 
 html{
@@ -92,13 +92,18 @@ nav .btn-close {
     background-color: #7cd1c0;
 }
 
-/* #status-section .row{
-    margin: 0px auto;
-    justify-content: center;
-}
-
-#status-section .col-md-4{
-    width: 30%;
-} */
 
 /* status section ends */
+
+
+/* footer starts */
+footer{
+    background-color: #fff;
+}
+
+footer p{
+    color: gray;
+    font-size: 0.85rem;
+}
+
+/* footer ends */
