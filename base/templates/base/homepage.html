@@ -12,6 +12,13 @@
         padding:  0.4rem 0.5rem;
         font-size: 0.9rem;
     }
+
+    .fa-arrow-right-from-bracket{
+        color: #000;
+    }
+    .fa-arrow-right-from-bracket:hover {
+        color: blue;
+    }
 </style>
 {% endblock %}
 
@@ -25,25 +32,37 @@
 
             <!-- customers section starts -->
             <div class="col-lg-4 gx-md-5 gy-4 gy-md-4 ">
-                <h3 class="fw-semibold pb-2">Customers : </h3>
                 <div class="card card-body">
+                    <h5 class="fw-semibold my-2 pb-2">Customers :</h5>
                     <div class="table-responsive">
-                        <table class="table table-sm ">
-                            <tr>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                <th>...</th>
-                            </tr>
+                        <table class="table table-sm table-bordered table-hover align-middle table-nowrap">
 
-                            {% for customer in customers %}
+                            <thead class="table-secondary">
                                 <tr>
-                                    <td>{{ customer.name }}</td>
-                                    <td>{{ customer.phone }}</td>
-                                    <td>
-                                        <a href="{% url 'customer' customer.id %}" class="btn btn-sm btn-primary">View</a>
-                                    </td>
+                                    <th>Customer</th>
+                                    <th>Phone</th>
+                                    <th class="text-center">Actions</th>
                                 </tr>
-                            {% endfor %}
+                            </thead>
+
+                            <tbody>
+                                {% for customer in customers %}
+                                    <tr>
+                                        <td class="fw-semibold">                                      
+                                            {{ customer.name }}
+                                        </td>
+                                        <td class="text-muted ">
+                                            {{ customer.phone }}
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="{% url 'customer' customer.id %}" class="btn btn-sm fs-6" title=" View Customer Profile">
+                                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+
                         </table>
                     </div>
                     <!-- customer pagination starts here -->
@@ -95,53 +114,58 @@
 
             <!-- orders section -->
             <div class="col-lg-8 gx-md-5 gy-4 gy-md-4 ">
-                <h3 class="fw-semibold pb-2 ">Orders :</h3>
                 <div class="card card-body">
+                    <h5 class="fw-semibold my-2 pb-2"> Orders :</h5>
                     <div class="table-responsive">
                         <table class="table table-sm align-middle table-bordered table-nowrap table-hover">
-                            <tr>
-                                <th>Product</th>
-                                <th>Date Ordered</th>
-                                <th>Status</th>
-                                <th class="text-center">Update</th>
-                                <th class="text-center">Delete</th>
-                            </tr>
 
-                            {% for order in orders %}
+                            <thead class="table-secondary">
                                 <tr>
-                                    <td class="fw-semibold">
-                                        <i class="bi bi-box-seam me-1 text-secondary"></i>
-                                        {{ order.product.name }}
-                                    </td>
-                                    <td class="text-muted">
-                                        <i class="bi bi-calendar3 me-1"></i>
-                                        {{ order.date_created|date:"M j, Y" }}
-                                    </td>
-                                     <td>
-                                        {% if order.status == "Delivered" %}
-                                            <span class="badge bg-success">{{ order.status }}</span>
-                                        {% elif order.status == "Pending" %}
-                                            <span class="badge bg-warning text-dark">{{ order.status }}</span>
-                                        {% else %}
-                                            <span class="badge bg-info">{{ order.status }}</span>
-                                        {% endif %}
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="{% url 'update_order' order.id %}?next={% url 'homepage'  %}"
-                                        class="btn btn-sm btn-outline-primary"
-                                        title="Update" >
-                                            <i class="fa-regular fa-pen-to-square"></i>
-                                        </a>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="{% url 'delete_order' order.id %}?next={% url 'homepage' %}"
-                                        class="btn btn-sm btn-outline-danger"
-                                        title="Delete">
-                                            <i class="fa-solid fa-trash-arrow-up"></i>
-                                        </a>
-                                    </td>
+                                    <th>Product</th>
+                                    <th>Date Ordered</th>
+                                    <th>Status</th>
+                                    <th class="text-center">Update</th>
+                                    <th class="text-center">Delete</th>
                                 </tr>
-                            {% endfor %}
+                            </thead>
+
+                            <tbody>
+                                {% for order in orders %}
+                                    <tr>
+                                        <td class="fw-semibold">
+                                            <i class="bi bi-box-seam me-1 text-secondary"></i>
+                                            {{ order.product.name }}
+                                        </td>
+                                        <td class="text-muted">
+                                            <i class="bi bi-calendar3 me-1"></i>
+                                            {{ order.date_created|date:"M j, Y" }}
+                                        </td>
+                                        <td>
+                                            {% if order.status == "Delivered" %}
+                                                <span class="badge bg-success">{{ order.status }}</span>
+                                            {% elif order.status == "Pending" %}
+                                                <span class="badge bg-warning text-dark">{{ order.status }}</span>
+                                            {% else %}
+                                                <span class="badge bg-info">{{ order.status }}</span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="{% url 'update_order' order.id %}?next={% url 'homepage'  %}"
+                                            class="btn btn-sm btn-outline-primary fs-6"
+                                            title="Update" >
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                            </a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="{% url 'delete_order' order.id %}?next={% url 'homepage' %}"
+                                            class="btn btn-sm btn-outline-danger fs-6"
+                                            title="Delete">
+                                                <i class="fa-solid fa-trash-arrow-up"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
 
                         </table>
                     </div>
