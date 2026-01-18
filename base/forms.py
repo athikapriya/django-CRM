@@ -7,6 +7,15 @@ from django.contrib.auth.models import User
 
 from .validators import PasswordComplexityValidator
 
+
+# customerForm starts 
+class CustomerForm(ModelForm):
+    class Meta:
+        model = Customer
+        fields = "__all__"
+        exclude = ["user"]
+# customerForm ends
+
 # orderForm starts
 
 class OrderForm(ModelForm):
@@ -37,7 +46,7 @@ class OrderForm(ModelForm):
         return note
 
     
-# orderForm starts
+# orderForm ends
 
 
 
