@@ -13,6 +13,10 @@
         font-size: 0.85rem;
         text-transform: uppercase;
     }
+
+    .badge i {
+        opacity: 0.9;
+    }
 </style>
 {% endblock %}
 
@@ -93,7 +97,11 @@
                             {% for order in orders %}
                             <tr>
                                 <td>{{ order.product.name }}</td>
-                                <td>{{ order.product.category }}</td>
+                                <td>
+                                    <span class="badge bg-light text-dark border">
+                                        {{ order.product.category }}
+                                    </span>
+                                </td>
                                 <td>{{ order.date_created|date:"M d, Y" }}</td>
                                 <td>
                                     {% if order.status == "Delivered" %}
