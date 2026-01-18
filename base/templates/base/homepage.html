@@ -27,24 +27,69 @@
             <div class="col-lg-4 gx-md-5 gy-4 gy-md-4 ">
                 <h3 class="fw-semibold pb-2">Customers : </h3>
                 <div class="card card-body">
-                    <table class="table table-sm">
-                        <tr>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>...</th>
-                        </tr>
-
-                        {% for customer in customers %}
+                    <div class="table-responsive">
+                        <table class="table table-sm ">
                             <tr>
-                                <td>{{ customer.name }}</td>
-                                <td>{{ customer.phone }}</td>
-                                <td>
-                                    <a href="{% url 'customer' customer.id %}" class="btn btn-sm btn-primary">View</a>
-                                </td>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>...</th>
                             </tr>
-                        {% endfor %}
 
-                    </table>
+                            {% for customer in customers %}
+                                <tr>
+                                    <td>{{ customer.name }}</td>
+                                    <td>{{ customer.phone }}</td>
+                                    <td>
+                                        <a href="{% url 'customer' customer.id %}" class="btn btn-sm btn-primary">View</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <!-- customer pagination starts here -->
+                    {% if customers.has_other_pages %}
+                    <div class="d-flex justify-content-end align-items-center mt-1">
+
+                        <!-- oagination starts -->
+                        <nav>
+                            <ul class="pagination mb-0">
+                                {% if customers.has_previous %}
+                                <li class="page-item">
+                                    <a href="?customer_page={{ customers.previous_page_number }}&order_page={{ orders.number }}" class="page-link" aria-label="Previous page">
+                                        <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                                        <span class="visually-hidden">Previous</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+
+                                {% for num in customers.paginator.page_range %}
+                                    {% if customers.number == num %}
+                                        <li class="page-item active">
+                                            <span class="page-link">{{ num }}</span>
+                                        </li>
+                                    {% elif num > customers.number|add:'-2' and num < customers.number|add:'2' %}
+                                        <li class="page-item">
+                                            <a href="?customer_page={{ num }}{% if orders.number %}&order_page={{ orders.number }}{% endif %}" class="page-link">{{ num }}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% if customers.has_next %}
+                                <li class="page-item">
+                                    <a href="?customer_page={{ customers.next_page_number }}&order_page={{ orders.number }}" class="page-link" aria-label="Next page">
+                                        <i class="fa-solid fa-arrow-right" aria-hidden="true">
+                                            <span class="visually-hidden">Next</span>
+                                        </i>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                        <!-- pagination ends -->
+
+                    </div>
+                    {% endif %}
+                    <!-- customer pagination ends here -->
                 </div>
             </div>
 
@@ -101,7 +146,7 @@
                         </table>
                     </div>
 
-                    <!-- pagination starts here -->
+                    <!-- order pagination starts here -->
                     {% if orders.has_other_pages %}
                     <div class="d-flex justify-content-between align-items-center mt-1">
 
@@ -111,14 +156,12 @@
                             of <span class="fw-bold">{{ orders.paginator.count }}</span> Orders
                         </div>
 
-                        <!-- pagination -->
+                        <!-- pagination starts -->
                         <nav>
                             <ul class="pagination mb-0" >
                                 {% if orders.has_previous %}
                                 <li class="page-item">
-                                    <a class="page-link"
-                                    href="?page={{ orders.previous_page_number }}"
-                                    aria-label="Previous page">
+                                    <a class="page-link" href="?order_page={{ orders.previous_page_number }}&customer_page={{ customers.number }}" aria-label="Previous page">
                                         <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
                                         <span class="visually-hidden">Previous</span>
                                     </a>
@@ -132,16 +175,14 @@
                                         </li>
                                     {% elif num > orders.number|add:'-2' and num < orders.number|add:'2' %}
                                         <li class="page-item">
-                                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                            <a class="page-link" href="?order_page={{ num }}&customer_page={{ customers.number }}">{{ num }}</a>
                                         </li>
                                     {% endif %}
                                 {% endfor %}
 
                                 {% if orders.has_next %}
                                 <li class="page-item">
-                                    <a class="page-link"
-                                    href="?page={{ orders.next_page_number }}"
-                                    aria-label="Next page">
+                                    <a class="page-link" href="?order_page={{ orders.next_page_number }}&customer_page={{ customers.number }}" aria-label="Next page">
                                         <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                                         <span class="visually-hidden">Next</span>
                                     </a>
@@ -150,11 +191,12 @@
 
                             </ul>
                         </nav>
+                        <!-- pagination ends -->
 
                     </div>
                     {% endif %}
 
-                    <!-- pagination ends here -->
+                    <!-- order pagination ends here -->
 
 
                 </div>
