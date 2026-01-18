@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import *
-from .forms import OrderForm, CreateUserForm
+from .forms import OrderForm, CreateUserForm, CustomerForm
 from django.forms import inlineformset_factory
 from .filters import OrderFilter
 from django.contrib import messages
@@ -137,6 +137,26 @@ def userProfile(request):
         "total_delivered" : total_delivered
     }
     return render(request, 'base/user_profile.html', context)
+
+
+
+# account settings view
+@login_required(login_url="login")
+@allowed_users(['customer'])
+def accountSettings(request):
+
+    customer = request.user.customer
+    form = CustomerForm(instance=customer)
+
+    if request.method == "POST":
+        form = CustomerForm(request.POST, request.FILES, instance=customer)
+        if form.is_valid():
+            form.save()
+            
+    context = {
+        "form" : form
+    }
+    return render(request, 'base/account_settings.html', context)
 
 
 
