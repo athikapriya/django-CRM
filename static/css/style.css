@@ -138,9 +138,9 @@ footer p{
 }
 
 .pagination .page-item.active .page-link {
-    color: white; 
-    background-color: #405189; 
-     border-color: #405189;
+    color: white !important; 
+    background-color: #405189 !important; 
+    border-color: #405189 !important;
 }
 
 .pagination .page-link i {
