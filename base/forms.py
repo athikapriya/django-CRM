@@ -14,25 +14,28 @@ class OrderForm(ModelForm):
         model = Order
         fields = "__all__"
         exclude = ["customer"]
+
         widgets = {
-            "note": forms.Textarea(
-                attrs = {
-                    "rows" : 2,
-                    "style" : "resize :none",
-                    "class" : "mt-2 form-control w-100",
-                    "placeholder" : "Max 200 words"
-                }
-            )
+            "product": forms.Select(attrs={
+                "class": "form-select",
+            }),
+            "status": forms.Select(attrs={
+                "class": "form-select",
+            }),
+            "note": forms.Textarea(attrs={
+                "rows": 2,
+                "style": "resize:none",
+                "class": "form-control",
+                "placeholder": "Max 200 words"
+            }),
         }
 
     def clean_note(self):
         note = self.cleaned_data.get("note", "")
-
-        if note:
-            word = note.split()
-            if len(word) > 200:
-                raise ValidationError("Note cannot exceed 200 words.")
+        if note and len(note.split()) > 200:
+            raise ValidationError("Note cannot exceed 200 words.")
         return note
+
     
 # orderForm starts
 
