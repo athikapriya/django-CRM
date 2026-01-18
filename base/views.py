@@ -161,11 +161,17 @@ def products(request):
 @allowed_users(['admin'])
 def customer(request, pk):
     customer = Customer.objects.get(id=pk)
-    orders = customer.order_set.all()
-    total_order = orders.count()
+    
+    order_list = customer.order_set.order_by("-date_created")
+   
+    myFilter = OrderFilter(request.GET, queryset=order_list)
+    filtered_orders = myFilter.qs
 
-    myFilter = OrderFilter(request.GET, queryset=orders)
-    orders = myFilter.qs
+    page_number = request.GET.get("order_page")
+    paginator = Paginator(filtered_orders, 5) 
+    orders = paginator.get_page(page_number)
+
+    total_order = order_list.count()
     
     context = {
         "customer" : customer,
