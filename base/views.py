@@ -144,7 +144,11 @@ def userProfile(request):
 @login_required(login_url="login")
 @allowed_users(['admin'])
 def products(request):
-    products = Product.objects.filter()
+    products_list = Product.objects.all().order_by('-id') 
+    page_number = request.GET.get('page')  
+    paginator = Paginator(products_list, 5) 
+    products = paginator.get_page(page_number)
+
     context = {
         "products" : products
     }

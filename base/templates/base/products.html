@@ -15,34 +15,78 @@
     <div class="container my-4">
         <div class="row px-3 px-md-0">
             <div class="card card-body">
-                <h3 class="fw-semibold">Products :</h3>
-                <hr>
+                <h5 class="fw-semibold my-2 pb-2">Products :</h5>
                 <div class="table-responsive">
-                    <table class="table table-sm align-middle table-nowrap table-hover">
+                    <table class="table table-sm align-middle table-bordered table-nowrap table-hover">
 
-                        <tr>
-                            <th>Products</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                        </tr>
-
-                        {% for product in products %}
+                        <thead class="table-secondary">
                             <tr>
-                                <td class="fw-semibold">
-                                   <i class="bi bi-box-seam me-1 text-secondary"></i>
-                                    {{ product.name }}
-                                </td>
-                                <td>
-                                    <span class="badge bg-light text-dark border">
-                                        {{ product.category }}
-                                    </span>
-                                </td>
-                                <td>${{ product.price }}</td>
+                                <th>Products</th>
+                                <th>Category</th>
+                                <th>Price</th>
                             </tr>
-                        {% endfor %}
+                        </thead>
+
+                        <tbody>
+                            {% for product in products %}
+                                <tr>
+                                    <td class="fw-semibold">
+                                    <i class="bi bi-box-seam me-1 text-secondary"></i>
+                                        {{ product.name }}
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-light text-dark border">
+                                            {{ product.category }}
+                                        </span>
+                                    </td>
+                                    <td>${{ product.price }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
 
                     </table>
                 </div>
+
+                <!-- pagination starts -->
+                <div class="d-flex justify-content-center align-items-center mt-1">
+                    {% if products.has_other_pages %}
+                    <nav class=" pagination">
+                        <ul class="pagination mb-0 text-end">
+
+                            {% if products.has_previous %}
+                            <li class="page-item">
+                                <a href="?page={{ products.previous_page_number }}" class="page-link" aria-label="Previous page">
+                                    <i class="fa-solid fa-arrow-left"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+
+                            {% for num in products.paginator.page_range %}
+                                {% if products.number == num %}
+                                    <li class="page-item active">
+                                        <span class="page-link">{{ num }}</span>
+                                    </li>
+                                {% elif num > products.number|add:'-2' and num < products.number|add:'2' %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if products.has_next %}
+                            <li class="page-item">
+                                <a href="?page={{ products.next_page_number }}" class="page-link" aria-label="Next page">
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+
+                        </ul>
+                    </nav>
+                    {% endif %}
+                </div>
+                <!-- pagination ends -->
+
             </div>
         </div>
     </div>
