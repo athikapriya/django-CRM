@@ -87,12 +87,18 @@ def unauthorized(request):
 @login_required(login_url="login")
 @admin_only
 def homepage(request):
-    customers = Customer.objects.all()
 
+    # customer paginator
+    customer_list = Customer.objects.all().order_by("-id")
+    customer_paginator = Paginator(customer_list, 5)
+    customer_page_number = request.GET.get("customer_page")
+    customers = customer_paginator.get_page(customer_page_number)
+
+    # order paginator
     order_list = Order.objects.order_by("-date_created")
-    paginator = Paginator(order_list, 5)
-    page_number = request.GET.get("page")
-    orders = paginator.get_page(page_number)
+    order_paginator = Paginator(order_list, 5)
+    order_page_number = request.GET.get("order_page")
+    orders = order_paginator.get_page(order_page_number)
 
     total_orders = order_list.count()
     total_pending = order_list.filter(status="Pending").count()
