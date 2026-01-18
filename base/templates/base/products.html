@@ -17,7 +17,7 @@
             <div class="card card-body">
                 <h5 class="fw-semibold my-2 pb-2">Products :</h5>
                 <div class="table-responsive">
-                    <table class="table table-sm align-middle table-bordered table-nowrap table-hover">
+                    <table class="table table-sm align-middle table-nowrap table-hover">
 
                         <thead class="table-secondary">
                             <tr>
@@ -39,7 +39,9 @@
                                             {{ product.category }}
                                         </span>
                                     </td>
-                                    <td>${{ product.price }}</td>
+                                    <td>
+                                        <span class="fw-semibold me-1">$</span>
+                                        {{ product.price }}</td>
                                 </tr>
                             {% endfor %}
                         </tbody>

@@ -13,12 +13,6 @@
         font-size: 0.9rem;
     }
 
-    .fa-arrow-right-from-bracket{
-        color: #000;
-    }
-    .fa-arrow-right-from-bracket:hover {
-        color: blue;
-    }
 </style>
 {% endblock %}
 
@@ -35,7 +29,7 @@
                 <div class="card card-body">
                     <h5 class="fw-semibold my-2 pb-2">Customers :</h5>
                     <div class="table-responsive">
-                        <table class="table table-sm table-bordered table-hover align-middle table-nowrap">
+                        <table class="table table-sm  table-hover align-middle table-nowrap">
 
                             <thead class="table-secondary">
                                 <tr>
@@ -55,7 +49,7 @@
                                             {{ customer.phone }}
                                         </td>
                                         <td class="text-center">
-                                            <a href="{% url 'customer' customer.id %}" class="btn btn-sm fs-6" title=" View Customer Profile">
+                                            <a href="{% url 'customer' customer.id %}" class="btn btn-sm fs-6 btn-outline-primary " title=" View Customer Profile">
                                                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                             </a>
                                         </td>
@@ -117,7 +111,7 @@
                 <div class="card card-body">
                     <h5 class="fw-semibold my-2 pb-2"> Orders :</h5>
                     <div class="table-responsive">
-                        <table class="table table-sm align-middle table-bordered table-nowrap table-hover">
+                        <table class="table table-sm align-middle table-nowrap table-hover">
 
                             <thead class="table-secondary">
                                 <tr>

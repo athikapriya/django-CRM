@@ -104,7 +104,8 @@
                                         <span class="badge bg-info">{{ order.status }}</span>
                                     {% endif %}
                                 </td>
-                                <td class="text-end">${{ order.product.price }}</td>
+                                <td class="text-end">
+                                    <span class="fw-semibold me-1">$</span>{{ order.product.price }}</td>
                             </tr>
                             {% empty %}
                             <tr>

@@ -13,6 +13,7 @@
     --primary-color : #4cb4c7;
     --secondary-color : #7abecc;
     --tertiary-color : #7cd1c0;
+    --quaternary-color : #0071BB;
 }
 
 body{
@@ -128,9 +129,9 @@ footer p{
 }
 
 .pagination .page-link {
-    color: #405189; 
+    color: var(--quaternary-color); 
     background-color: white; 
-    border: 1px solid #405189;
+    border: 1px solid var(--quaternary-color);
     padding: 0.2rem 0.55rem 0.3rem;
     border-radius: 0.25rem;
     font-weight: 500;
@@ -139,8 +140,8 @@ footer p{
 
 .pagination .page-item.active .page-link {
     color: white !important; 
-    background-color: #405189 !important; 
-    border-color: #405189 !important;
+    background-color: var(--quaternary-color) !important; 
+    border-color: var(--quaternary-color) !important;
 }
 
 .pagination .page-link i {
