@@ -1,80 +1,53 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en-US">
-<head>
-    <!-- meta tag -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=7">
-    <meta name="author" content="Athika Priya">
-    <meta name="keywords" content="html, css, bootstrap, js, python, django, dbsqlite3">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'base/main.html' %}
+{% block content %}
 
-    <!-- title -->
-    <title>ClientHub - Create Order</title>
+<section class="py-4">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
 
-    <!-- favicon -->
-    <link rel="shortcut icon" href="{% static 'images/favicon.webp' %}" type="image/x-icon">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-transparent">
+                        <h5 class="mb-0 fw-semibold">
+                            <i class="fa-solid fa-cart-plus me-1"></i>
+                            Create Orders
+                        </h5>
+                    </div>
 
-    <!-- font awesome cdn -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+                    <div class="card-body">
 
-    <!-- bootstrap css -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ formSet.management_form }}
 
-    <!-- stylesheet -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
-
-</head>
-<body>
-
-    <main>
-
-        <!-- order creation starts -->
-        <section id="create-order">
-            <div class="container my-4">
-                <div class="row">
-                    <div class="col-12 col-lg-10 mx-auto">
-                        <div class="card card-body">
-                            <h3>Add Order : </h3>
-                            <hr>
-                            <form action="" method="POST">
-                                {% csrf_token %}
-                                {{ formSet.management_form }}
-
-                                <div class="row">
-
-                                    {% for form in formSet %}
-                                        <div class="col-md-6">
-                                            <div class="input-group">
-                                                <div class="input-group-append">
-                                                    {{form.as_p}}
-                                                </div>
-                                            </div>
-
-                                            <br>
-
+                            <div class="row g-3">
+                                {% for form in formSet %}
+                                    <div class="col-md-6">
+                                        <div class="border rounded p-3 h-100">
+                                            <h6 class="text-muted mb-3">
+                                                Order {{ forloop.counter }}
+                                            </h6>
+                                            {{ form.as_p }}
                                         </div>
-                                    {% endfor %}
+                                    </div>
+                                {% endfor %}
+                            </div>
 
-                                </div>
+                            <div class="text-end mt-4">
+                                <button type="submit"
+                                        class="btn btn-primary btn-sm">
+                                    Create Orders
+                                </button>
+                            </div>
 
-                                <button type="submit" value="Create Order" class="btn btn-sm btn-primary">Add Order</button>
+                        </form>
 
-                            </form>
-                        </div>
                     </div>
                 </div>
+
             </div>
-        </section>
-        <!-- order creation ends -->
+        </div>
+    </div>
+</section>
 
-    </main>
-
-
-    <!-- bootstrap js -->
-    <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+{% endblock %}

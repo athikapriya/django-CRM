@@ -1,69 +1,46 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en-US">
-<head>
-    <!-- meta tag -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=7">
-    <meta name="author" content="Athika Priya">
-    <meta name="keywords" content="html, css, bootstrap, js, python, django, dbsqlite3">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'base/main.html' %}
+{% block content %}
 
-    <!-- title -->
-    <title>ClientHub - Update Order</title>
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
 
-    <!-- favicon -->
-    <link rel="shortcut icon" href="{% static 'images/favicon.webp' %}" type="image/x-icon">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-transparent">
+                        <h5 class="mb-0 fw-semibold">
+                            <i class="fa-regular fa-pen-to-square me-1"></i>
+                            Update Order
+                        </h5>
+                    </div>
 
-    <!-- font awesome cdn -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+                    <div class="card-body">
 
-    <!-- bootstrap css -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+                        <form method="POST">
+                            {% csrf_token %}
 
-    <!-- stylesheet -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2">
-    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+                            {{ form.as_p }}
 
-</head>
-<body>
+                            <div class="d-flex justify-content-end gap-2 mt-3">
+                                <a href="{{ request.GET.next|default:'/' }}"
+                                   class="btn btn-outline-secondary btn-sm">
+                                    Cancel
+                                </a>
 
-    <main>
+                                <button type="submit"
+                                        class="btn btn-primary btn-sm">
+                                    Save Changes
+                                </button>
+                            </div>
 
-        <!-- order update starts -->
-
-        <section id="update-order">
-            <div class="container min-vh-100 d-flex justify-content-center align-items-center">
-                <div class="row " >
-                    <div class=" mx-auto ">
-
-                        <div class="card card-body">
-                            <h3>Update Order :</h3>
-                            <hr>
-
-                            <form action="" method="POST" class="mx-auto py-3">
-                                {% csrf_token %}
-                                
-                                {{ form.as_p }}
-
-                                <button type="submit" value="Update Order" class="btn btn-sm btn-primary mt-2">Update Order</button>
-                            </form>
-
-                        </div>
+                        </form>
 
                     </div>
                 </div>
+
             </div>
-        </section>
+        </div>
+    </div>
+</section>
 
-        <!-- order update ends -->
-
-    </main>
-
-
-    <!-- bootstrap js -->
-    <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+{% endblock %}

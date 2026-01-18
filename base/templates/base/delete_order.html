@@ -1,68 +1,48 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en-US">
-<head>
-    <!-- meta tag -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=7">
-    <meta name="author" content="Athika Priya">
-    <meta name="keywords" content="html, css, bootstrap, js, python, django, dbsqlite3">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'base/main.html' %}
+{% block content %}
 
-    <!-- title -->
-    <title>ClientHub - Delete Order</title>
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
 
-    <!-- favicon -->
-    <link rel="shortcut icon" href="{% static 'images/favicon.webp' %}" type="image/x-icon">
+                <div class="card shadow-sm border-danger">
+                    <div class="card-body text-center">
 
-    <!-- font awesome cdn -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
-
-    <!-- bootstrap css -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
-
-    <!-- stylesheet -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
-
-</head>
-<body>
-    <main>
-
-        <!-- delete order section -->
-        <section id="delete_order">
-            <div class="container min-vh-100 d-flex justify-content-center align-items-center">
-                <div class="row">
-                    <div class="mx-auto">
-
-                        <div class="card card-body ">
-
-                            <form action="" method="POST">
-                                {% csrf_token %}
-
-                                <p>Are you sure to delete the 
-                                    <strong>"{{ order }}"?</strong>
-                                </p>
-
-                                <a href="{% url 'homepage' %}" class="btn btn-sm btn-warning">Cancel</a>
-                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                            </form>
-
+                        <div class="mb-3">
+                            <i class="fa-solid fa-triangle-exclamation fa-2x text-danger"></i>
                         </div>
+
+                        <h5 class="fw-semibold mb-2">Confirm Delete</h5>
+
+                        <p class="text-muted mb-4">
+                            Are you sure you want to delete this order?
+                            <br>
+                            <strong class="text-dark">“{{ order }}”</strong>
+                        </p>
+
+                        <form method="POST">
+                            {% csrf_token %}
+
+                            <div class="d-flex justify-content-center gap-2">
+                                <a href="{{ request.GET.next|default:'/' }}"
+                                   class="btn btn-outline-secondary btn-sm">
+                                    Cancel
+                                </a>
+
+                                <button type="submit"
+                                        class="btn btn-danger btn-sm">
+                                    Delete Order
+                                </button>
+                            </div>
+                        </form>
 
                     </div>
                 </div>
+
             </div>
-        </section>
-        <!-- delete order section -->
+        </div>
+    </div>
+</section>
 
-    </main>
-
-
-
-    <!-- bootstrap js -->
-    <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+{% endblock %}
