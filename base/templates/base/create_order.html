@@ -1,5 +1,10 @@
 {% extends 'base/main.html' %}
+{% load static %}
+
 {% block content %}
+
+<!-- Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet">
 
 <section class="py-4">
     <div class="container">
@@ -15,39 +20,102 @@
                     </div>
 
                     <div class="card-body">
-
                         <form method="POST">
                             {% csrf_token %}
                             {{ formSet.management_form }}
 
-                            <div class="row g-3">
+                            <div class="row g-4">
+
                                 {% for form in formSet %}
                                     <div class="col-md-6">
-                                        <div class="border rounded p-3 h-100">
+                                        <div class="border rounded p-3 h-100 shadow-sm">
+
                                             <h6 class="text-muted mb-3">
                                                 Order {{ forloop.counter }}
                                             </h6>
-                                            {{ form.as_p }}
+
+                                            <div class="row g-3">
+
+                                                <!-- Product -->
+                                                <div class="col-12 col-lg-6">
+                                                    <label class="form-label">Product</label>
+                                                    {{ form.product }}
+                                                </div>
+
+                                                <!-- Status -->
+                                                <div class="col-12 col-lg-6">
+                                                    <label class="form-label">Status</label>
+                                                    {{ form.status }}
+                                                </div>
+
+                                                <!-- Note -->
+                                                <div class="col-12">
+                                                    <label class="form-label">Note</label>
+                                                    {{ form.note }}
+                                                </div>
+
+                                            </div>
+
                                         </div>
                                     </div>
                                 {% endfor %}
                             </div>
 
                             <div class="text-end mt-4">
-                                <button type="submit"
-                                        class="btn btn-primary btn-sm">
+                                <button type="submit" class="btn btn-primary btn-sm">
                                     Create Orders
                                 </button>
                             </div>
 
                         </form>
-
                     </div>
+
                 </div>
 
             </div>
         </div>
     </div>
 </section>
+
+<!-- jQuery (required for Select2) -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
+
+<!-- Select2 Init -->
+<script>
+$(document).ready(function () {
+
+    // Product searchable
+    $('select[id$="-product"]').select2({
+        placeholder: "Select product",
+        width: "100%"
+    });
+
+    // Status searchable
+    $('select[id$="-status"]').select2({
+        placeholder: "Select status",
+        width: "100%"
+    });
+
+});
+</script>
+
+<!-- Select2 Bootstrap fix -->
+<style>
+.select2-container .select2-selection--single {
+    height: 38px;
+    padding: 5px 10px;
+}
+
+.select2-selection__rendered {
+    line-height: 26px;
+}
+
+.select2-selection__arrow {
+    height: 36px;
+}
+</style>
 
 {% endblock %}
