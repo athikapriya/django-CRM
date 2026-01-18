@@ -17,6 +17,16 @@
     .badge i {
         opacity: 0.9;
     }
+
+    .table-responsive table {
+        min-width: 750px;
+    }
+
+    .table-nowrap th,
+    .table-nowrap td {
+        white-space: nowrap;
+    }
+
 </style>
 {% endblock %}
 
@@ -77,12 +87,12 @@
 
         <!-- customer order section starts -->
         <div class="row my-4">
-            <div class="card shadow-sm card-body">
-                <div class="card-header" style="background-color: transparent;">
-                    <h5 class="my-2">Order History</h5>
+            <div class="card shadow-sm card-body pb-3">
+                <div class="card-header ps-0" style="background-color: transparent;">
+                    <h5 class="mb-2 ">Order History</h5>
                 </div>
 
-                <div class="table-responsive">
+                <div class="table-responsive-md">
                     <table class="table table-sm table-hover align-middle table-nowrap mb-0">
                         <thead class="table-secondary">
                             <tr>
@@ -102,7 +112,9 @@
                                         {{ order.product.category }}
                                     </span>
                                 </td>
-                                <td>{{ order.date_created|date:"M d, Y" }}</td>
+                                <td class="text-muted">
+                                    {{ order.date_created|date:"M j, Y" }}
+                                </td>
                                 <td>
                                     {% if order.status == "Delivered" %}
                                         <span class="badge bg-success">{{ order.status }}</span>
