@@ -136,77 +136,84 @@
         <div class="row my-4">
             <div class="card card-body">
                 <h5 class="fw-semibold my-2 pb-2">Orders :</h5>
-                <div class="table-responsive">
-                    <table class="table table-sm align-middle table-bordered table-nowrap table-hover">
-                        <thead class="table-secondary">
-                            <tr>
-                                <th>Product</th>
-                                <th>Remarks</th>
-                                <th>Category</th>
-                                <th>Date Ordered</th>
-                                <th>Status</th>
-                                <th class="text-center">Update</th>
-                                <th class="text-center">Remove</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            {% for order in orders %}
+                {% if orders %}
+                    <div class="table-responsive">
+                        <table class="table table-sm align-middle table-bordered table-nowrap table-hover">
+                            <thead class="table-secondary">
                                 <tr>
-                                    <td class="fw-semibold">
-                                        <i class="bi bi-box-seam me-1 text-secondary"></i>
-                                        {{ order.product.name }}
-                                    </td>
-                                    <td style="max-width: 220px;">
-                                        {% if order.note %}
-                                            <span 
-                                                class="text-truncate d-inline-block"
-                                                style="max-width: 200px;"
-                                                title="{{ order.note }}"
-                                            >
-                                                {{ order.note }}
-                                            </span>
-                                        {% else %}
-                                            <span class="text-muted fst-italic">No remarks</span>
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-light text-dark border">
-                                            {{ order.product.category }}
-                                        </span>
-                                    </td>
-                                    <td class="text-muted">
-                                        <i class="bi bi-calendar3 me-1"></i>
-                                        {{ order.date_created|date:"M j, Y" }}
-                                    </td>
-                                    <td>
-                                        {% if order.status == "Delivered" %}
-                                            <span class="badge bg-success">{{ order.status }}</span>
-                                        {% elif order.status == "Pending" %}
-                                            <span class="badge bg-warning text-dark">{{ order.status }}</span>
-                                        {% else %}
-                                            <span class="badge bg-info">{{ order.status }}</span>
-                                        {% endif %}
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="{% url 'update_order' order.id %}?next={% url 'customer' customer.id %}"
-                                        class="btn btn-sm btn-outline-primary"
-                                        title="Update" >
-                                            <i class="fa-regular fa-pen-to-square"></i>
-                                        </a>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="{% url 'delete_order' order.id %}?next={% url 'customer' customer.id %}"
-                                        class="btn btn-sm btn-outline-danger"
-                                        title="Delete">
-                                            <i class="fa-solid fa-trash-arrow-up"></i>
-                                        </a>
-                                    </td>
+                                    <th>Product</th>
+                                    <th>Remarks</th>
+                                    <th>Category</th>
+                                    <th>Date Ordered</th>
+                                    <th>Status</th>
+                                    <th class="text-center">Update</th>
+                                    <th class="text-center">Remove</th>
                                 </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+
+                            <tbody>
+                                {% for order in orders %}
+                                    <tr>
+                                        <td class="fw-semibold">
+                                            <i class="bi bi-box-seam me-1 text-secondary"></i>
+                                            {{ order.product.name }}
+                                        </td>
+                                        <td style="max-width: 220px;">
+                                            {% if order.note %}
+                                                <span 
+                                                    class="text-truncate d-inline-block"
+                                                    style="max-width: 200px;"
+                                                    title="{{ order.note }}"
+                                                >
+                                                    {{ order.note }}
+                                                </span>
+                                            {% else %}
+                                                <span class="text-muted fst-italic">No remarks</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-light text-dark border">
+                                                {{ order.product.category }}
+                                            </span>
+                                        </td>
+                                        <td class="text-muted">
+                                            <i class="bi bi-calendar3 me-1"></i>
+                                            {{ order.date_created|date:"M j, Y" }}
+                                        </td>
+                                        <td>
+                                            {% if order.status == "Delivered" %}
+                                                <span class="badge bg-success">{{ order.status }}</span>
+                                            {% elif order.status == "Pending" %}
+                                                <span class="badge bg-warning text-dark">{{ order.status }}</span>
+                                            {% else %}
+                                                <span class="badge bg-info">{{ order.status }}</span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="{% url 'update_order' order.id %}?next={% url 'customer' customer.id %}"
+                                            class="btn btn-sm btn-outline-primary"
+                                            title="Update" >
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                            </a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="{% url 'delete_order' order.id %}?next={% url 'customer' customer.id %}"
+                                            class="btn btn-sm btn-outline-danger"
+                                            title="Delete">
+                                                <i class="fa-solid fa-trash-arrow-up"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="alert alert-warning text-center mb-0 ">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        This customer has not placed any orders yet.
+                    </div>
+                {% endif %}
 
                 <!-- paginator starts here -->
                 <div class="d-flex justify-content-center align-items-center mt-1">
