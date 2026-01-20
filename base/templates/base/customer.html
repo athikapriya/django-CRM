@@ -136,7 +136,7 @@
         <div class="row my-4">
             <div class="card card-body">
                 <h5 class="fw-semibold my-2 pb-2">Orders :</h5>
-                {% if orders %}
+
                     <div class="table-responsive">
                         <table class="table table-sm align-middle table-nowrap table-hover">
                             <thead class="table-secondary">
@@ -203,16 +203,16 @@
                                             </a>
                                         </td>
                                     </tr>
-                                {% endfor %}
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted py-4">
+                                            No orders found.
+                                        </td>
+                                    </tr>
+                                {% endfor %} 
                             </tbody>
                         </table>
                     </div>
-                {% else %}
-                    <div class="alert alert-warning text-center mb-0 ">
-                        <i class="fa-solid fa-circle-exclamation"></i>
-                        This customer has not placed any orders yet.
-                    </div>
-                {% endif %}
 
                 <!-- paginator starts here -->
                 <div class="d-flex justify-content-center align-items-center mt-1">
