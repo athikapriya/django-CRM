@@ -9,11 +9,24 @@ from .validators import PasswordComplexityValidator
 
 
 # customerForm starts 
+
 class CustomerForm(ModelForm):
     class Meta:
         model = Customer
-        fields = "__all__"
-        exclude = ["user"]
+        fields = ['name', 'phone', 'email', 'profile_pic']
+
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control'
+                }),
+            'phone': forms.TextInput(attrs={
+                'class': 'form-control'
+                }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control'
+                }),
+        }
+
 # customerForm ends
 
 # orderForm starts
