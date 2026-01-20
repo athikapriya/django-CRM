@@ -144,19 +144,24 @@ def userProfile(request):
 @login_required(login_url="login")
 @allowed_users(['customer'])
 def accountSettings(request):
-
     customer = request.user.customer
-    form = CustomerForm(instance=customer)
 
     if request.method == "POST":
+        print(request.FILES)
         form = CustomerForm(request.POST, request.FILES, instance=customer)
         if form.is_valid():
             form.save()
-            
+            return redirect("user")
+    else:
+        form = CustomerForm(instance=customer)
+
     context = {
-        "form" : form
+        "form": form,
+        "customer": customer
     }
-    return render(request, 'base/account_settings.html', context)
+    return render(request, "base/account_settings.html", context)
+
+
 
 
 
