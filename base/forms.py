@@ -1,4 +1,4 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, ClearableFileInput
 from .models import *
 from django import forms
 from django.core.exceptions import ValidationError
@@ -10,21 +10,19 @@ from .validators import PasswordComplexityValidator
 
 # customerForm starts 
 
-class CustomerForm(ModelForm):
+class CustomClearableFileInput(ClearableFileInput):
+    template_name = 'widgets/custom_clearable_file_input.html'
+
+
+class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer
         fields = ['name', 'phone', 'email', 'profile_pic']
-
         widgets = {
-            'name': forms.TextInput(attrs={
-                'class': 'form-control'
-                }),
-            'phone': forms.TextInput(attrs={
-                'class': 'form-control'
-                }),
-            'email': forms.EmailInput(attrs={
-                'class': 'form-control'
-                }),
+            'name': forms.TextInput(attrs={'class': 'form-control form-control-sm', 'placeholder': 'Full Name'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control form-control-sm', 'placeholder': 'Phone Number'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control form-control-sm', 'placeholder': 'Email Address'}),
+            'profile_pic': CustomClearableFileInput(attrs={'style': 'display:none;'}),  # use our custom widget
         }
 
 # customerForm ends
