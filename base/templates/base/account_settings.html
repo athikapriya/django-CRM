@@ -1,47 +1,95 @@
 {% extends 'base/main.html' %}
-
-{% block css %}
-
-<style>
-    .profile-pic {
-    width: 100%;
-    max-width: 250px;
-    height: auto;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-</style>
-{% endblock %}
 {% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/account_settings.css' %}">
+{% endblock %}
+
+{% load static %}
+
 {% block content %}
 <section id="account-settings">
-    <div class="container">
-        <div class="row">
+    <div class="container-lg my-4">
+        <div class="row justify-content-center">
+            <div class="col-11 col-lg-10">
 
-            <div class="col-md-3">
-                <div class="card card-body">
-                    <a href="{% url 'homepage' %}" class="btn btn-warning">Back to Profile</a>
-                    <hr>
-                    <h3 class="text-center">Account Settings</h3>
-                    <hr>
-                    <img src="{{ request.user.customer.profile_pic.url }}" alt="Profile Pic" class="profile-pic">
-                </div>
+                <!-- customer form starts -->
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="row">
+
+                        <!-- Left Column: Profile -->
+                        <div class=" col-md-5 col-xl-4 mb-4">
+                            <div class="card text-center">
+                                <h4 class="section-title">Profile</h4>
+
+                                <div class="profile-section mt-3 d-flex align-items-center flex-column">
+                                    <div class="profile-pic-container">
+                                        <label for="id_profile_pic" style="cursor: pointer; display: inline-block;">
+
+                                            <img
+                                                src="{% if customer.profile_pic %}{{ customer.profile_pic.url }}{% else %}{% static 'images/profile.webp' %}{% endif %}"
+                                                class="profile-pic"
+                                                id="profileImage"
+                                                alt="profile_pic"
+                                                data-default-src="{% static 'images/profile.webp' %}">
+
+                                        </label>
+
+                                        {{ form.profile_pic }}
+
+                                        {% if customer.profile_pic %}
+                                            <input type="checkbox" name="{{ form.profile_pic.name }}-clear" id="id_profile_pic_clear" style="display:none;">
+                                        {% endif %}
+
+                                        <label for="id_profile_pic" class="camera-icon position-absolute d-flex align-items-center justify-content-center">
+                                            <i class="fa fa-camera"></i>
+                                        </label>
+                                    </div>
+
+                                    {% if customer.profile_pic %}
+                                        <button type="button" class="mt-4 btn-sm clear-btn fw-semibold" id="removePhotoBtn">Remove Photo</button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Account Info -->
+                        <div class="col-md-7 col-xl-8">
+                            <div class="card">
+                                <h4 class="section-title">Account Information</h4>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" for="{{ form.name.id_for_label }}">Full Name</label>
+                                    {{ form.name }}
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" for="{{ form.phone.id_for_label }}">Phone Number</label>
+                                    {{ form.phone }}
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold" for="{{ form.email.id_for_label }}">Email Address</label>
+                                    {{ form.email }}
+                                </div>
+
+                                <div class="text-center mt-4">
+                                    <button type="submit" class="update-btn fw-semibold">Update Information</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+                <!-- customer form ends -->
+
             </div>
-
-            <div class="col-md-9">
-                <div class="card card-body">
-                    <form action="" method="POST" enctype="multipart/form-data">
-
-                        {% csrf_token %}
-                        {{ form.as_p }}
-
-                        <input type="submit" value="Update Info" name="Update Info" class="btn btn-primary">
-                    </form>
-                </div>
-            </div>
-
         </div>
-    </div>
+    </div>  
 </section>
+{% endblock %}
+
+
+<!-- scripts -->
+{% block scripts %}
+<script src="{% static 'js/account_settings.js' %}"></script>
 {% endblock %}
