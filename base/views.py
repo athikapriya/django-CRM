@@ -27,8 +27,7 @@ def registerPage(request):
             user = authenticate(request, username=username, password=password)
             if user:
                 login(request, user)
-                return redirect("user")
-            
+                return redirect("user_profile")
             messages.success(request, "Account created successfully. Welcome {username}" )
             return redirect("login")
 
@@ -54,7 +53,7 @@ def loginPage(request):
             if user.is_superuser or user.groups.filter(name="admin").exists():
                 return redirect("homepage")
             elif user.groups.filter(name="customer").exists():
-                return redirect("user")
+                return redirect("user_profile", username = user.username)
             else:
                 return redirect("unauthorized")
             
@@ -124,9 +123,17 @@ def homepage(request):
 # user profile view
 @login_required(login_url="login")
 @allowed_users(['customer'])
-def userProfile(request):
+def userProfile(request, username):
 
-    orders = request.user.customer.order_set.all()
+    if not User.objects.filter(username=username).exists():
+        return redirect("unauthorized")
+    
+    if request.user.username != username:
+        return redirect("unauthorized")
+    
+    customer = request.user.customer
+    orders = customer.order_set.all()
+
     total_orders = orders.count()
     total_pending = orders.filter(status="Pending").count()
     total_delivered = orders.filter(status="Delivered").count()
@@ -143,7 +150,11 @@ def userProfile(request):
 # account settings view
 @login_required(login_url="login")
 @allowed_users(['customer'])
-def accountSettings(request):
+def accountSettings(request, username):
+
+    if request.user.username != username :
+        return redirect("unauthorized")
+    
     customer = request.user.customer
 
     if request.method == "POST":
@@ -151,7 +162,7 @@ def accountSettings(request):
         form = CustomerForm(request.POST, request.FILES, instance=customer)
         if form.is_valid():
             form.save()
-            return redirect("user")
+            return redirect("user_profile", username=request.user.username)
     else:
         form = CustomerForm(instance=customer)
 
