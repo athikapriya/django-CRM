@@ -46,7 +46,7 @@
                 {% if group.name == "admin" %}
                     <a href="{% url 'homepage' %}">Admin Homepage</a>
                 {% elif group.name == "customer" %}
-                    <a href="{% url 'user' %}">Go to your Profile</a>
+                    <a href="{% url 'user_profile' request.user.username %}">Go to your Profile</a>
                 {% endif %}
             {% endfor %}
         {% endif %}
