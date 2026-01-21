@@ -79,12 +79,12 @@
 
                     <ul class="dropdown-menu dropdown-menu-end shadow">
                         <li>
-                            <a class="dropdown-item user-link" href="{% url 'user' %}">
+                            <a class="dropdown-item user-link" href="{% url 'user_profile' request.user.username %}">
                                 <i class="fa-solid fa-user me-2"></i> Profile
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item user-link" href="{% url 'settings' %}">
+                            <a class="dropdown-item user-link" href="{% url 'settings' request.user.username %}">
                                 <i class="fa-solid fa-gear me-2"></i> Settings
                             </a>
                         </li>
