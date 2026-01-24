@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
+import datetime
 
 
 class Customer(models.Model):
@@ -60,3 +62,18 @@ class Order(models.Model):
         if self.product:
             return self.product.name
         return "Order"
+    
+
+
+class PasswordResetOTP(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    otp = models.CharField(max_length=6)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    is_used = models.BooleanField(default=False)
+
+    def is_valid(self):
+        expiry_time = self.created_at + datetime.timedelta(minutes=5)
+        return not self.is_used and timezone.now() <= expiry_time
+    
+    def __str__(self):
+        return f"OTP for {self.user.username} : {self.otp}"
