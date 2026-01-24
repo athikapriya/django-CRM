@@ -1,0 +1,141 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <!-- meta tag -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta name="author" content="Athika Priya">
+    <meta name="keywords" content="html, css, bootstrap, js, python, django, dbsqlite3">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- title -->
+    <title>ClientHub</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="{% static 'images/favicon.webp' %}" type="image/x-icon">
+
+    <!-- font awesome cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+
+    <!-- stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+
+    <!-- internal stylesheet starts -->
+
+    <style>
+        body{
+            background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url("{% static 'images/background_img.webp' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+        }
+
+        .card{
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.25);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+            color: #fff;
+            width: 360px;
+        }
+
+        .card h1, .card h2, .card h3, .card label, .card p{
+            color: #fff;
+        }
+
+        .form-control{
+            width: 100%;
+            background: rgba(255,255,255,0.9);
+            border-radius: 6px;
+            padding: 6px 8px;
+            font-size: 0.9rem;
+        }
+
+        .form-control:focus{
+            border: 1px solid #4cb4c7;
+            box-shadow: none;
+        }
+
+        .field-label{
+            display: block;
+            width: 100%;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+            color: #fff;
+        }
+
+        .field{
+            margin-bottom: 12px;
+            width: 100%;
+        }
+
+        .error-msg{
+            font-size: 0.85rem;
+            display: block;
+            margin-top: 2px;
+        }
+
+        @media screen and (max-width: 576px){
+            .card{ width: auto; }
+        }
+
+    </style>
+
+    <!-- internal stylesheet ends -->
+</head>
+<body>
+
+    <main>
+        <!-- otp form starts here -->
+        <section id="request-otp">
+            <div class="container min-vh-100 d-flex justify-content-center align-items-center">
+                <div class="mx-auto">
+                    <div class="card card-body p-4">
+                        <h1 class="fs-3 mb-4 fw-semibold text-center ">Password Reset</h1>
+
+                        <form method="POST">
+                            {% csrf_token %}
+
+                            <div class="field">
+                                <span class="field-label">Enter your email</span>
+                                {{ form.email|add_class:"form-control" }}
+                                {% for error in form.email.errors %}
+                                    <small class="error-msg">
+                                        <i class="fa-solid fa-triangle-exclamation"></i>
+                                        {{ error }}
+                                    </small>
+                                {% endfor %}
+                            </div>
+
+                            <div class="d-flex justify-content-center mt-4 mb-2">
+                                <button type="submit" class="btn btn-light fw-semibold ">Send OTP</button>
+                            </div>
+
+                            {% for message in messages %}
+                                <p class="text-center text-white mt-2">
+                                    {{ message }}
+                                </p>
+                            {% endfor %}
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ots form ends here -->
+    </main>
+
+    <!-- bootstrap js cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
