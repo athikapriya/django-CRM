@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import *
-from .forms import OrderForm, CreateUserForm, CustomerForm
+from .forms import OrderForm, CreateUserForm, CustomerForm, RequestOTPForm, VerifyOTPForm, SetNewPasswordForm
 from django.forms import inlineformset_factory
 from .filters import OrderFilter
 from django.contrib import messages
@@ -8,6 +8,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users, admin_only
 from django.core.paginator import Paginator
+import random
+from django.core.mail import send_mail
+from django.contrib.auth.models import User
 
 
 
@@ -172,6 +175,103 @@ def accountSettings(request, username):
     }
     return render(request, "base/account_settings.html", context)
 
+
+
+# request password views
+def request_password_otp(request):
+    if request.method == "POST":
+        form = RequestOTPForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data["email"]
+            try:
+                user = User.objects.get(email=email)
+                otp = str(random.randint(100000, 999999))
+                
+                PasswordResetOTP.objects.create(user=user, otp=otp)
+                
+                send_mail(
+                    subject="Your OTP for password reset",
+                    message=f"Your OTP is {otp}. It expires in 6 minutes.",
+                    from_email="noreply@clienthub.com",
+                    recipient_list=[email]
+                )
+                
+                request.session['reset_user_id'] = user.id
+                messages.success(request, "OTP sent to your email!")
+                return redirect("verify_otp") 
+            
+            except User.DoesNotExist:
+                messages.error(request, "No user found with this email")
+    else:
+        form = RequestOTPForm()
+    
+    return render(request, "base/request_otp.html", {"form": form})
+
+
+
+# verify OTP view
+def verify_otp(request):
+    user_id = request.session.get('reset_user_id')
+    if not user_id:
+        messages.error(request, "Session expired. Please enter your email again.")
+        return redirect("password_reset_otp")
+    
+    user = User.objects.get(id=user_id)
+
+    if request.method == "POST":
+        form = VerifyOTPForm(request.POST)
+        if form.is_valid():
+            otp_input = form.cleaned_data['otp']
+
+            otp_record = PasswordResetOTP.objects.filter(
+                user=user,
+                otp=otp_input,
+                is_used=False
+            ).last()
+
+            if otp_record and otp_record.is_valid():
+                request.session['otp_verified'] = True 
+                return redirect("password_reset_now")
+            else:
+                form.add_error('otp', "Invalid or expired OTP")  
+    else:
+        form = VerifyOTPForm()
+
+    return render(request, "base/verify_otp.html", {"form": form})
+
+
+
+# password reset now views
+@login_required(login_url="login")
+def password_reset_now(request):
+    user_id = request.session.get('reset_user_id')
+    otp_verified = request.session.get('otp_verified', False)
+
+    if not user_id or not otp_verified:
+        messages.error(request, "Unauthorized access.")
+        return redirect("request_password_otp")
+
+    user = User.objects.get(id=user_id)
+
+    if request.method == "POST":
+        form = SetNewPasswordForm(request.POST)
+        if form.is_valid():
+            new_password = form.cleaned_data['new_password1']
+            user.set_password(new_password)
+            user.save()
+
+            del request.session['reset_user_id']
+            del request.session['otp_verified']
+
+            messages.success(request, "Password reset successfully! Please login.")
+            return redirect("login")
+    else:
+        form = SetNewPasswordForm()
+
+    context = {
+        "form": form
+    }
+    return render(request, "base/password_reset_now.html", context)
 
 
 
