@@ -159,3 +159,54 @@ class CreateUserForm(UserCreationForm):
     
 
 # userCreation Form ends
+
+
+# Request OTP and verify OTP forms starts
+
+class RequestOTPForm(forms.Form):
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Enter your email'})
+    )
+
+
+class VerifyOTPForm(forms.Form):
+    otp = forms.CharField(max_length=6, label="Enter OTP")
+
+
+class SetNewPasswordForm(forms.Form):
+    new_password1 = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control password-field', 'placeholder': 'New Password'}),
+        label="New Password",
+        required=True
+    )
+    new_password2 = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control password-field', 'placeholder': 'Confirm Password'}),
+        label="Confirm Password",
+        required=True
+    )
+
+    def clean_new_password2(self):
+        password1 = self.cleaned_data.get('new_password1')
+        password2 = self.cleaned_data.get('new_password2')
+
+        validator = PasswordComplexityValidator()
+
+        if not password1:
+            raise ValidationError(
+                "Password must be at least 8 characters and include a capital letter, a number, a symbol, and lowercase letters."
+            )
+
+        try:
+            validator.validate(password1)
+        except ValidationError:
+            raise ValidationError(
+                "Password must be at least 8 characters and include a capital letter, a number, a symbol, and lowercase letters."
+            )
+
+        if password1 and password2 and password1 != password2:
+            raise ValidationError("The two password fields didn’t match.")
+
+        return password2
+
+
+# Request OTP and verify OTP forms ends
