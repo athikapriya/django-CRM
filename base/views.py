@@ -177,6 +177,13 @@ def accountSettings(request, username):
 
 
 
+# password recovery choice vews
+def password_recovery_choice(request):
+    context = {}
+    return render(request, 'base/password_recovery_choice.html', context)
+
+
+
 # request password views
 def request_password_otp(request):
     if request.method == "POST":
