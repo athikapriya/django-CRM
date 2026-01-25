@@ -146,13 +146,13 @@
                                 <div class="field ">
                                     <label class="form-label">{{ form.username.label }}</label>
                                         {{ form.username }}
-                                        <div>
-                                            {% for error in form.username.errors %}
-                                                <small class="">
-                                                    <i class="fa-solid fa-triangle-exclamation"></i>
-                                                    {{ error }}
-                                                </small>
-                                                <br>
+                                    <div>
+                                        {% for error in form.username.errors %}
+                                            <small class="">
+                                                <i class="fa-solid fa-triangle-exclamation"></i>
+                                                {{ error }}
+                                            </small>
+                                            <br>
                                         {% endfor %}
                                     </div>
                                 </div>
@@ -207,7 +207,7 @@
                                 <!-- password2 ends -->
 
                                 <!-- register submit button -->
-                                <div class="d-flex justify-content-center align-items-center  mt-3 mt-sm-4 mb-3">
+                                <div class="d-flex justify-content-center align-items-center mt-4 mb-3">
                                     <button type="submit" class="btn btn-light fw-semibold">Create Account</button>
                                 </div>
                                
