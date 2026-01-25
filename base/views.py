@@ -11,6 +11,7 @@ from django.core.paginator import Paginator
 import random
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
+from django.core.mail import EmailMessage
 
 
 
@@ -191,27 +192,45 @@ def request_password_otp(request):
         if form.is_valid():
             email = form.cleaned_data["email"]
             try:
+                # Check if user exists
                 user = User.objects.get(email=email)
+
+                # Generate OTP
                 otp = str(random.randint(100000, 999999))
-                
                 PasswordResetOTP.objects.create(user=user, otp=otp)
-                
-                send_mail(
-                    subject="Your OTP for password reset",
-                    message=f"Your OTP is {otp}. It expires in 6 minutes.",
-                    from_email="noreply@clienthub.com",
-                    recipient_list=[email]
+
+                # email body
+                email_body = f"""
+ClientHub Security Team 🔐
+
+Your One-Time Password (OTP):
+{otp}
+
+⏳ Expires in 6 minutes
+
+If you didn’t request this, ignore this email.
+ — ClientHub
+"""
+
+                # Send email
+                email_msg = EmailMessage(
+                    subject="ClientHub Password Reset OTP",
+                    body=email_body,
+                    from_email="ClientHub Security Team <yourgmail@gmail.com>",
+                    to=[email],
                 )
-                
+                email_msg.send()
+
+                # Save user ID in session for verification
                 request.session['reset_user_id'] = user.id
                 messages.success(request, "OTP sent to your email!")
-                return redirect("verify_otp") 
-            
+                return redirect("verify_otp")
+
             except User.DoesNotExist:
                 messages.error(request, "No user found with this email")
     else:
         form = RequestOTPForm()
-    
+
     return render(request, "base/request_otp.html", {"form": form})
 
 
@@ -237,6 +256,9 @@ def verify_otp(request):
             ).last()
 
             if otp_record and otp_record.is_valid():
+                otp_record.is_used = True   
+                otp_record.save()
+
                 request.session['otp_verified'] = True 
                 return redirect("password_reset_now")
             else:
@@ -249,7 +271,6 @@ def verify_otp(request):
 
 
 # password reset now views
-@login_required(login_url="login")
 def password_reset_now(request):
     user_id = request.session.get('reset_user_id')
     otp_verified = request.session.get('otp_verified', False)
