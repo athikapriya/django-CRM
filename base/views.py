@@ -31,7 +31,7 @@ def registerPage(request):
             user = authenticate(request, username=username, password=password)
             if user:
                 login(request, user)
-                return redirect("user_profile")
+                return redirect("user_profile", username=user.username)
             messages.success(request, "Account created successfully. Welcome {username}" )
             return redirect("login")
 
